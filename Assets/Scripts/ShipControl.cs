@@ -5,6 +5,7 @@ using System.Collections;
 [RequireComponent(typeof(Animator))]
 public class ShipControl : MonoBehaviour
 {
+    static ShipControl instance = null;
     public const string RamField = "ramming";
 
     public enum FlightMode
@@ -22,6 +23,7 @@ public class ShipControl : MonoBehaviour
     [SerializeField]
     Collider ramCollider = null;
 
+    [Header("Movement stats")]
     [SerializeField]
     [Range(0, 1000)]
     float forceTowardsTarget = 100f;
@@ -35,14 +37,23 @@ public class ShipControl : MonoBehaviour
     [Range(0, 30)]
     float rotateLerp = 1f;
 
+    [Header("Conditions")]
     [SerializeField]
     [ReadOnly]
     bool rammingOn = false;
-
     [SerializeField]
     [Range(0, 5)]
     float reverseFor = 2f;
-
+    [SerializeField]
+    [Range(1, 100)]
+    int maxHealth = 10;
+    [SerializeField]
+    [Range(0, 1)]
+    float enemyHitDamageRatio = 0.3f;
+    [SerializeField]
+    float predictiveMultiplierNormal = 10f;
+    [SerializeField]
+    float predictiveMultiplierRam = 10f;
 
     Rigidbody bodyCache = null;
     Animator animatorCache = null;
@@ -54,6 +65,30 @@ public class ShipControl : MonoBehaviour
     Quaternion lookRotation = Quaternion.identity;
     FlightMode direction = FlightMode.ToTheTarget;
     float timeCollisionStarted = -1f;
+    int enemyHitDamage = 1,
+        currentHealth = 0;
+    
+    public static ShipControl Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
+
+    public Vector3 GetPredictedLocation(Transform enemy)
+    {
+        Vector3 predictedDirection = Vector3.zero;
+        if (IsRamming == true)
+        {
+            predictedDirection = moveDirection * (Vector3.Distance(transform.position, enemy.position) * predictiveMultiplierRam);
+        }
+        else
+        {
+            predictedDirection = moveDirection * (Vector3.Distance(transform.position, enemy.position) * predictiveMultiplierNormal);
+        }
+        return transform.position + predictedDirection;
+    }
 
     Rigidbody Body
     {
@@ -105,13 +140,47 @@ public class ShipControl : MonoBehaviour
         }
     }
 
+    public int CurrentHealth
+    {
+        get
+        {
+            return currentHealth;
+        }
+        set
+        {
+            int newHealth = Mathf.Clamp(value, 0, maxHealth);
+            if(currentHealth != newHealth)
+            {
+                currentHealth = newHealth;
+
+                // FIXME: do something on death!
+                Debug.Log(currentHealth);
+
+                if (currentHealth <= 0)
+                {
+                    Finish();
+                }
+            }
+        }
+    }
+
     void Start()
     {
+        instance = this;
+        Time.timeScale = 1;
         targets.Setup(this);
+        currentHealth = maxHealth;
+        enemyHitDamage = Mathf.RoundToInt(maxHealth * enemyHitDamageRatio);
     }
 
 	void Update ()
     {
+        // Make sure there are enemies
+        if(targets.HasEnemy == false)
+        {
+            return;
+        }
+
         // Grab controls
         controlInput.x = Input.GetAxis("Horizontal");
         controlInput.y = Input.GetAxis("Vertical");
@@ -138,13 +207,16 @@ public class ShipControl : MonoBehaviour
                 direction = FlightMode.ToTheTarget;
             }
         }
-        lookRotation = Quaternion.LookRotation(targetToShip);
+        lookRotation = Quaternion.LookRotation(moveDirection);
+
+        // Update rotation
+        //transform.LookAt(targets.CurrentEnemy.EnemyTransform);
     }
 
     void FixedUpdate()
     {
-        // Update rotation
-        Body.rotation = Quaternion.Lerp(Body.rotation, lookRotation, (Time.deltaTime * rotateLerp));
+        // Add rotation
+        Body.rotation = Quaternion.Slerp(Body.rotation, lookRotation, (Time.deltaTime * rotateLerp));
 
         // Add controls force
         forceCache.x = controlInput.x * forceSidewaysSpeed;
@@ -177,7 +249,8 @@ public class ShipControl : MonoBehaviour
             }
             else
             {
-                // FIXME: inflict damage to self
+                // Inflict damage to self
+                CurrentHealth -= enemyHitDamage;
 
                 // Fly away from the enemy
                 direction = FlightMode.AwayFromTheTarget;
@@ -187,8 +260,20 @@ public class ShipControl : MonoBehaviour
             // Grab the next enemy if this one is dead
             if(enemy.EnemyScript.CurrentHealth <= 0)
             {
-                targets.NextEnemy();
+                if (targets.HasEnemy == true)
+                {
+                    targets.NextEnemy();
+                }
+                else
+                {
+                    Finish();
+                }
             }
         }
+    }
+
+    void Finish()
+    {
+        Time.timeScale = 0.1f;
     }
 }

@@ -1306,7 +1306,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1774af6063f418442896f22c781fcf7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectsToPreload: []
+  objectsToPreload:
+  - {fileID: 111582, guid: 82ca831b31b6d744aba6232136097e4d, type: 2}
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
