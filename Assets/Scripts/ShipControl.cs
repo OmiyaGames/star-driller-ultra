@@ -2,8 +2,11 @@
 using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Animator))]
 public class ShipControl : MonoBehaviour
 {
+    public const string RamField = "ramming";
+
     public enum FlightMode
     {
         ToTheTarget,
@@ -19,13 +22,21 @@ public class ShipControl : MonoBehaviour
     [Range(0, 1000)]
     float forceTowardsTarget = 100f;
     [SerializeField]
-    [Range(0, 20)]
+    [Range(0, 2000)]
+    float forceRamming = 2000f;
+    [SerializeField]
+    [Range(0, 50)]
     float forceSidewaysSpeed = 10f;
     [SerializeField]
     [Range(0, 30)]
     float rotateLerp = 1f;
 
+    [SerializeField]
+    [ReadOnly]
+    bool rammingOn = false;
+
     Rigidbody bodyCache = null;
+    Animator animatorCache = null;
     Vector2 controlInput = Vector2.zero;
     Vector3 targetToShip = Vector3.zero,
         forceCache = Vector3.zero;
@@ -45,6 +56,34 @@ public class ShipControl : MonoBehaviour
         }
     }
 
+    Animator Animate
+    {
+        get
+        {
+            if (animatorCache == null)
+            {
+                animatorCache = GetComponent<Animator>();
+            }
+            return animatorCache;
+        }
+    }
+
+    public bool IsRamming
+    {
+        get
+        {
+            return rammingOn;
+        }
+        private set
+        {
+            if (rammingOn != value)
+            {
+                rammingOn = value;
+                Animate.SetBool(RamField, rammingOn);
+            }
+        }
+    }
+
     void Start()
     {
         targets.Setup(this);
@@ -55,7 +94,8 @@ public class ShipControl : MonoBehaviour
         // Grab controls
         controlInput.x = Input.GetAxis("Horizontal");
         controlInput.y = Input.GetAxis("Vertical");
-        if(Input.GetButtonDown("NextTarget") == true)
+        IsRamming = Input.GetButton("Fire1");
+        if (Input.GetButtonDown("NextTarget") == true)
         {
             targets.NextEnemy();
         }
@@ -67,6 +107,10 @@ public class ShipControl : MonoBehaviour
         // Figure out the direction to look at
         targetToShip = (targets.CurrentEnemy.EnemyTransform.position - transform.position);
         targetToShip.Normalize();
+        if (direction == FlightMode.AwayFromTheTarget)
+        {
+            targetToShip *= -1f;
+        }
         lookRotation = Quaternion.LookRotation(targetToShip, camera.up);
 
         // Update rotation
@@ -82,12 +126,18 @@ public class ShipControl : MonoBehaviour
         Body.AddRelativeForce(forceCache, ForceMode.Impulse);
 
         // Add forward force
-        if (direction == FlightMode.ToTheTarget)
+        if (IsRamming == true)
         {
-            forceCache.x = 0;
-            forceCache.y = 0;
-            forceCache.z = forceTowardsTarget;
-            Body.AddRelativeForce(forceCache, ForceMode.Force);
+            forceCache.x = targetToShip.x * forceRamming;
+            forceCache.y = targetToShip.y * forceRamming;
+            forceCache.z = targetToShip.z * forceRamming;
         }
+        else
+        {
+            forceCache.x = targetToShip.x * forceTowardsTarget;
+            forceCache.y = targetToShip.y * forceTowardsTarget;
+            forceCache.z = targetToShip.z * forceTowardsTarget;
+        }
+        Body.AddForce(forceCache, ForceMode.Force);
     }
 }
