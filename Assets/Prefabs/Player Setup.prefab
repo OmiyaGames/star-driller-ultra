@@ -372,7 +372,7 @@ MonoBehaviour:
   forceTowardsTarget: 1000
   forceRamming: 2000
   forceSidewaysSpeed: 20
-  rotateLerp: 5
+  rotateLerp: 3
   rammingOn: 0
 --- !u!114 &11488492
 MonoBehaviour:
@@ -388,12 +388,14 @@ MonoBehaviour:
   m_Target: {fileID: 400808}
   m_AutoTargetPlayer: 1
   m_UpdateType: 0
+  ship: {fileID: 11475092}
+  enemies: {fileID: 11403768}
   m_MoveSpeed: 100
-  m_TurnSpeed: 50
+  m_TurnSpeed: 10
   m_RollSpeed: .5
   m_FollowVelocity: 0
   m_FollowTilt: 1
-  m_SpinTurnLimit: 110
+  m_SpinTurnLimit: 90
   m_TargetVelocityLowerLimit: 4
   m_SmoothTurnTime: .200000003
 --- !u!124 &12494994

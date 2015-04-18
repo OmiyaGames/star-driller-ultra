@@ -4,7 +4,9 @@ using UnityEngine;
 public class ShipCamera : UnityStandardAssets.Cameras.PivotBasedCameraRig
 {
     [SerializeField]
-    EnemyCollection lookAt = null;
+    ShipControl ship = null;
+    [SerializeField]
+    EnemyCollection enemies = null;
     [SerializeField] 
     float m_MoveSpeed = 3; // How fast the rig will move to keep up with target's position
     [SerializeField] 
@@ -93,6 +95,7 @@ public class ShipCamera : UnityStandardAssets.Cameras.PivotBasedCameraRig
 
         // camera's rotation is split into two parts, which can have independend speed settings:
         // rotating towards the target's forward direction (which encompasses its 'yaw' and 'pitch')
+        targetForward = ship.TargetToShip;
         if (!m_FollowTilt)
         {
             targetForward.y = 0;
