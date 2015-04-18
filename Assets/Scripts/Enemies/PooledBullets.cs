@@ -1,9 +1,14 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PooledBullets : IPooledObject
 {
+    public static readonly Dictionary<Collider, PooledBullets> colliderMap = new Dictionary<Collider, PooledBullets>();
+
+    [SerializeField]
+    [Range(1, 10)]
+    int damage = 2;
     [SerializeField]
     [Range(1, 100)]
     float force = 50f;
@@ -14,6 +19,15 @@ public class PooledBullets : IPooledObject
     Rigidbody bodyCache = null;
     float timeStart = 0f;
     Vector3 forceDirection = Vector3.forward;
+    bool inDictionary = false;
+
+    public int Damage
+    {
+        get
+        {
+            return damage;
+        }
+    }
 
     public Rigidbody Body
     {
@@ -41,6 +55,16 @@ public class PooledBullets : IPooledObject
         base.Start();
         forceDirection = transform.rotation * (new Vector3(0, 0, force));
         timeStart = Time.time;
+
+        if(inDictionary == false)
+        {
+            Collider[] allColliders = GetComponentsInChildren<Collider>();
+            foreach(Collider collider in allColliders)
+            {
+                colliderMap.Add(collider, this);
+            }
+            inDictionary = true;
+        }
     }
 
     void Update()

@@ -13,7 +13,7 @@ public class Shooter : IEnemy
     [SerializeField]
     PooledBullets bullets = null;
     [SerializeField]
-    Transform spawnPoint = null;
+    Transform[] spawnPoints = null;
     [SerializeField]
     [Range(0, 5)]
     float shootEvery = 3f;
@@ -46,9 +46,12 @@ public class Shooter : IEnemy
             case State.Charging:
                 if((Time.time - lastShot) > charge)
                 {
-                    GameObject instance = Singleton.Get<PoolingManager>().GetInstance(bullets.gameObject, spawnPoint.position, spawnPoint.rotation);
-                    PooledBullets bullet = instance.GetComponent<PooledBullets>();
-                    bullet.Rotation = transform.rotation;
+                    foreach(Transform spawnAt in spawnPoints)
+                    {
+                        GameObject instance = Singleton.Get<PoolingManager>().GetInstance(bullets.gameObject, spawnAt.position, spawnAt.rotation);
+                        PooledBullets bullet = instance.GetComponent<PooledBullets>();
+                        bullet.Rotation = transform.rotation;
+                    }
                     lastShot = Time.time;
                     state = State.Cooldown;
                 }

@@ -54,6 +54,9 @@ public class ShipControl : MonoBehaviour
     float predictiveMultiplierNormal = 10f;
     [SerializeField]
     float predictiveMultiplierRam = 10f;
+    [SerializeField]
+    [Range(0, 1)]
+    float rammingDefenseMultiplier = 0.5f;
 
     Rigidbody bodyCache = null;
     Animator animatorCache = null;
@@ -240,34 +243,52 @@ public class ShipControl : MonoBehaviour
     void OnCollisionEnter(Collision info)
     {
         EnemyCollection.EnemyInfo enemy;
+        PooledBullets bullet;
         if (targets.ColliderMap.TryGetValue(info.collider, out enemy) == true)
         {
-            if (IsRamming == true)
+            HitEnemy(enemy);
+        }
+        else if(PooledBullets.colliderMap.TryGetValue(info.collider, out bullet) == true)
+        {
+            if(IsRamming == true)
             {
-                // Inflict damage to enemy
-                enemy.EnemyScript.CurrentHealth -= 1;
+                CurrentHealth -= Mathf.RoundToInt(bullet.Damage * rammingDefenseMultiplier);
             }
             else
             {
-                // Inflict damage to self
-                CurrentHealth -= enemyHitDamage;
-
-                // Fly away from the enemy
-                direction = FlightMode.AwayFromTheTarget;
-                timeCollisionStarted = Time.time;
+                CurrentHealth -= bullet.Damage;
             }
+            bullet.Die();
+        }
+    }
 
-            // Grab the next enemy if this one is dead
-            if(enemy.EnemyScript.CurrentHealth <= 0)
+    private void HitEnemy(EnemyCollection.EnemyInfo enemy)
+    {
+        if (IsRamming == true)
+        {
+            // Inflict damage to enemy
+            enemy.EnemyScript.CurrentHealth -= 1;
+        }
+        else
+        {
+            // Inflict damage to self
+            CurrentHealth -= enemyHitDamage;
+
+            // Fly away from the enemy
+            direction = FlightMode.AwayFromTheTarget;
+            timeCollisionStarted = Time.time;
+        }
+
+        // Grab the next enemy if this one is dead
+        if (enemy.EnemyScript.CurrentHealth <= 0)
+        {
+            if (targets.HasEnemy == true)
             {
-                if (targets.HasEnemy == true)
-                {
-                    targets.NextEnemy();
-                }
-                else
-                {
-                    Finish();
-                }
+                targets.NextEnemy();
+            }
+            else
+            {
+                Finish();
             }
         }
     }
