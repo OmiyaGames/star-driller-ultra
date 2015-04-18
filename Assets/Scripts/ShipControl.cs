@@ -11,7 +11,7 @@ public class ShipControl : MonoBehaviour
     }
 
     [SerializeField]
-    Transform target = null;
+    EnemyCollection targets = null;
     [SerializeField]
     Transform camera = null;
 
@@ -31,6 +31,7 @@ public class ShipControl : MonoBehaviour
         forceCache = Vector3.zero;
     Quaternion currentRotation = Quaternion.identity;
     Quaternion lookRotation = Quaternion.identity;
+    FlightMode direction = FlightMode.ToTheTarget;
 
     Rigidbody Body
     {
@@ -44,14 +45,27 @@ public class ShipControl : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        targets.Setup(this);
+    }
+
 	void Update ()
     {
         // Grab controls
         controlInput.x = Input.GetAxis("Horizontal");
         controlInput.y = Input.GetAxis("Vertical");
+        if(Input.GetButtonDown("NextTarget") == true)
+        {
+            targets.NextEnemy();
+        }
+        else if(Input.GetButtonDown("PreviousTarget") == true)
+        {
+            targets.PreviousEnemy();
+        }
 
         // Figure out the direction to look at
-        targetToShip = (target.position - transform.position);
+        targetToShip = (targets.CurrentEnemy.EnemyTransform.position - transform.position);
         targetToShip.Normalize();
         lookRotation = Quaternion.LookRotation(targetToShip, camera.up);
 
@@ -68,9 +82,12 @@ public class ShipControl : MonoBehaviour
         Body.AddRelativeForce(forceCache, ForceMode.Impulse);
 
         // Add forward force
-        forceCache.x = 0;
-        forceCache.y = 0;
-        forceCache.z = forceTowardsTarget;
-        Body.AddRelativeForce(forceCache, ForceMode.Force);
+        if (direction == FlightMode.ToTheTarget)
+        {
+            forceCache.x = 0;
+            forceCache.y = 0;
+            forceCache.z = forceTowardsTarget;
+            Body.AddRelativeForce(forceCache, ForceMode.Force);
+        }
     }
 }
