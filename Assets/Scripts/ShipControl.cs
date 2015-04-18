@@ -17,12 +17,16 @@ public class ShipControl : MonoBehaviour
     EnemyCollection targets = null;
     [SerializeField]
     Transform camera = null;
+    [SerializeField]
+    Collider hitCollider = null;
+    [SerializeField]
+    Collider ramCollider = null;
 
     [SerializeField]
     [Range(0, 1000)]
     float forceTowardsTarget = 100f;
     [SerializeField]
-    [Range(0, 2000)]
+    [Range(0, 100)]
     float forceRamming = 2000f;
     [SerializeField]
     [Range(0, 50)]
@@ -35,14 +39,21 @@ public class ShipControl : MonoBehaviour
     [ReadOnly]
     bool rammingOn = false;
 
+    [SerializeField]
+    [Range(0, 5)]
+    float reverseFor = 2f;
+
+
     Rigidbody bodyCache = null;
     Animator animatorCache = null;
     Vector2 controlInput = Vector2.zero;
     Vector3 targetToShip = Vector3.zero,
+        moveDirection = Vector3.zero,
         forceCache = Vector3.zero;
     Quaternion currentRotation = Quaternion.identity;
     Quaternion lookRotation = Quaternion.identity;
     FlightMode direction = FlightMode.ToTheTarget;
+    float timeCollisionStarted = -1f;
 
     Rigidbody Body
     {
@@ -80,6 +91,8 @@ public class ShipControl : MonoBehaviour
             {
                 rammingOn = value;
                 Animate.SetBool(RamField, rammingOn);
+                hitCollider.gameObject.SetActive(rammingOn == false);
+                ramCollider.gameObject.SetActive(rammingOn == true);
             }
         }
     }
@@ -115,21 +128,24 @@ public class ShipControl : MonoBehaviour
         // Figure out the direction to look at
         targetToShip = (targets.CurrentEnemy.EnemyTransform.position - transform.position);
         targetToShip.Normalize();
+        moveDirection = targetToShip;
         if (direction == FlightMode.AwayFromTheTarget)
         {
-            lookRotation = Quaternion.LookRotation((targetToShip * -1f), camera.up);
+            moveDirection *= -1f;
+            if((Time.time - timeCollisionStarted) > reverseFor)
+            {
+                timeCollisionStarted = -1f;
+                direction = FlightMode.ToTheTarget;
+            }
         }
-        else
-        {
-            lookRotation = Quaternion.LookRotation(targetToShip, camera.up);
-        }
-
-        // Update rotation
-        Body.rotation = Quaternion.Lerp(Body.rotation, lookRotation, (Time.deltaTime * rotateLerp));
+        lookRotation = Quaternion.LookRotation(targetToShip);
     }
 
     void FixedUpdate()
     {
+        // Update rotation
+        Body.rotation = Quaternion.Lerp(Body.rotation, lookRotation, (Time.deltaTime * rotateLerp));
+
         // Add controls force
         forceCache.x = controlInput.x * forceSidewaysSpeed;
         forceCache.y = controlInput.y * forceSidewaysSpeed;
@@ -139,16 +155,40 @@ public class ShipControl : MonoBehaviour
         // Add forward force
         if (IsRamming == true)
         {
-            forceCache.x = targetToShip.x * forceRamming;
-            forceCache.y = targetToShip.y * forceRamming;
-            forceCache.z = targetToShip.z * forceRamming;
+            forceCache = moveDirection * forceRamming;
+            Body.AddForce(forceCache, ForceMode.Impulse);
         }
         else
         {
-            forceCache.x = targetToShip.x * forceTowardsTarget;
-            forceCache.y = targetToShip.y * forceTowardsTarget;
-            forceCache.z = targetToShip.z * forceTowardsTarget;
+            forceCache = moveDirection * forceTowardsTarget;
+            Body.AddForce(forceCache, ForceMode.Force);
         }
-        Body.AddForce(forceCache, ForceMode.Force);
+    }
+
+    void OnCollisionEnter(Collision info)
+    {
+        EnemyCollection.EnemyInfo enemy;
+        if (targets.ColliderMap.TryGetValue(info.collider, out enemy) == true)
+        {
+            if (IsRamming == true)
+            {
+                // Inflict damage to enemy
+                enemy.EnemyScript.CurrentHealth -= 1;
+            }
+            else
+            {
+                // FIXME: inflict damage to self
+
+                // Fly away from the enemy
+                direction = FlightMode.AwayFromTheTarget;
+                timeCollisionStarted = Time.time;
+            }
+
+            // Grab the next enemy if this one is dead
+            if(enemy.EnemyScript.CurrentHealth <= 0)
+            {
+                targets.NextEnemy();
+            }
+        }
     }
 }

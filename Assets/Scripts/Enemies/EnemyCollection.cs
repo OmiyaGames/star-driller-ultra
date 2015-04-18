@@ -4,17 +4,27 @@ using System.Collections.Generic;
 public class EnemyCollection : MonoBehaviour
 {
     [System.Serializable]
-    public struct EnemyInfo
+    public class EnemyInfo
     {
+        [SerializeField]
+        GameObject gameObject;
         [SerializeField]
         Transform transform;
         [SerializeField]
-        GameObject gameObject;
+        IEnemy script;
 
         public EnemyInfo(GameObject enemy)
         {
             gameObject = enemy;
             transform = enemy.transform;
+            script = enemy.GetComponent<IEnemy>();
+        }
+
+        public EnemyInfo(IEnemy enemy)
+        {
+            gameObject = enemy.gameObject;
+            transform = enemy.transform;
+            script = enemy;
         }
 
         public GameObject EnemyObject
@@ -30,6 +40,14 @@ public class EnemyCollection : MonoBehaviour
             get
             {
                 return transform;
+            }
+        }
+
+        public IEnemy EnemyScript
+        {
+            get
+            {
+                return script;
             }
         }
     }
@@ -49,11 +67,11 @@ public class EnemyCollection : MonoBehaviour
             int result = 0;
             if(leftDistance > rightDistance)
             {
-                result = -1;
+                result = 1;
             }
             else if(rightDistance > leftDistance)
             {
-                result = 1;
+                result = -1;
             }
             return result;
         }
@@ -62,6 +80,7 @@ public class EnemyCollection : MonoBehaviour
     [SerializeField]
     [ReadOnly]
     List<EnemyInfo> allEnemies = new List<EnemyInfo>();
+    Dictionary<Collider, EnemyInfo> colliderMap = new Dictionary<Collider, EnemyInfo>();
 
     int currentEnemyIndex = 0;
 
@@ -70,6 +89,14 @@ public class EnemyCollection : MonoBehaviour
         get
         {
             return allEnemies;
+        }
+    }
+
+    public Dictionary<Collider, EnemyInfo> ColliderMap
+    {
+        get
+        {
+            return colliderMap;
         }
     }
 
@@ -86,13 +113,14 @@ public class EnemyCollection : MonoBehaviour
     {
         // Reset stuff
         allEnemies.Clear();
+        colliderMap.Clear();
         currentEnemyIndex = 0;
 
         // Collect all enemies
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject enemy in enemies)
         {
-            allEnemies.Add(new EnemyInfo(enemy));
+            AddEnemy(new EnemyInfo(enemy));
         }
         allEnemies.Sort(new EnemySorter(control));
     }
@@ -115,5 +143,42 @@ public class EnemyCollection : MonoBehaviour
             currentEnemyIndex = (allEnemies.Count - 1);
         }
         return CurrentEnemy;
+    }
+
+    public void RemoveEnemy(IEnemy script)
+    {
+        allEnemies.RemoveAll(script.MatchEnemy);
+        if (currentEnemyIndex >= allEnemies.Count)
+        {
+            currentEnemyIndex = allEnemies.Count - 1;
+        }
+
+        List<Collider> allColliders = new List<Collider>();
+        foreach(KeyValuePair<Collider, EnemyInfo> pair in colliderMap)
+        {
+            if(pair.Value.EnemyScript == script)
+            {
+                allColliders.Add(pair.Key);
+            }
+        }
+        foreach (Collider collider in allColliders)
+        {
+            colliderMap.Remove(collider);
+        }
+    }
+
+    public void AddEnemy(IEnemy script)
+    {
+        AddEnemy(new EnemyInfo(script));
+    }
+
+    public void AddEnemy(EnemyInfo info)
+    {
+        allEnemies.Add(info);
+        Collider[] colliders = info.EnemyObject.GetComponentsInChildren<Collider>();
+        foreach (Collider collider in colliders)
+        {
+            colliderMap.Add(collider, info);
+        }
     }
 }
