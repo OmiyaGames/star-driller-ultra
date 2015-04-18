@@ -59,8 +59,8 @@ GameObject:
   - 33: {fileID: 3310250}
   - 65: {fileID: 6517588}
   - 23: {fileID: 2393096}
-  - 114: {fileID: 11475092}
   - 54: {fileID: 5463558}
+  - 114: {fileID: 11475092}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Player
@@ -222,8 +222,8 @@ Rigidbody:
   m_GameObject: {fileID: 172990}
   serializedVersion: 2
   m_Mass: 10
-  m_Drag: .100000001
-  m_AngularDrag: .0500000007
+  m_Drag: 5
+  m_AngularDrag: .100000001
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -300,9 +300,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   camera: {fileID: 449606}
-  moveTowardsTarget: 10
-  moveSidewaysSpeed: 10
-  rotateLerp: 5
+  forceTowardsTarget: 600
+  forceSidewaysSpeed: 20
+  rotateLerp: 10
 --- !u!114 &11488492
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -317,12 +317,12 @@ MonoBehaviour:
   m_Target: {fileID: 485954}
   m_AutoTargetPlayer: 1
   m_UpdateType: 0
-  m_MoveSpeed: 3
-  m_TurnSpeed: 2
-  m_RollSpeed: .200000003
+  m_MoveSpeed: 100
+  m_TurnSpeed: 100
+  m_RollSpeed: .5
   m_FollowVelocity: 0
   m_FollowTilt: 1
-  m_SpinTurnLimit: 90
+  m_SpinTurnLimit: 135
   m_TargetVelocityLowerLimit: 4
   m_SmoothTurnTime: .200000003
 --- !u!124 &12494994
