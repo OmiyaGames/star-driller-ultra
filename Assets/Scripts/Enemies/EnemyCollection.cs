@@ -100,6 +100,14 @@ public class EnemyCollection : MonoBehaviour
         }
     }
 
+    public bool HasEnemy
+    {
+        get
+        {
+            return (AllEnemies.Count > 0);
+        }
+    }
+
     public EnemyInfo CurrentEnemy
     {
         get
@@ -180,5 +188,6 @@ public class EnemyCollection : MonoBehaviour
         {
             colliderMap.Add(collider, info);
         }
+        info.EnemyScript.Collection = this;
     }
 }
