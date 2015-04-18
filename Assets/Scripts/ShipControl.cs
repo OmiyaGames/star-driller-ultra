@@ -84,6 +84,14 @@ public class ShipControl : MonoBehaviour
         }
     }
 
+    public Vector3 TargetToShip
+    {
+        get
+        {
+            return targetToShip;
+        }
+    }
+
     void Start()
     {
         targets.Setup(this);
@@ -109,9 +117,12 @@ public class ShipControl : MonoBehaviour
         targetToShip.Normalize();
         if (direction == FlightMode.AwayFromTheTarget)
         {
-            targetToShip *= -1f;
+            lookRotation = Quaternion.LookRotation((targetToShip * -1f), camera.up);
         }
-        lookRotation = Quaternion.LookRotation(targetToShip, camera.up);
+        else
+        {
+            lookRotation = Quaternion.LookRotation(targetToShip, camera.up);
+        }
 
         // Update rotation
         Body.rotation = Quaternion.Lerp(Body.rotation, lookRotation, (Time.deltaTime * rotateLerp));
