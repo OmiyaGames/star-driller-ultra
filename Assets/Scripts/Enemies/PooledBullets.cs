@@ -15,11 +15,21 @@ public class PooledBullets : IPooledObject
     [SerializeField]
     [Range(1, 20)]
     float dieAfter = 5f;
+    [SerializeField]
+    [Range(0, 20)]
+    float homeFor = 0.5f;
+    [SerializeField]
+    [Range(0, 20)]
+    float homingLerp = 5f;
 
     Rigidbody bodyCache = null;
     float timeStart = 0f;
-    Vector3 forceDirection = Vector3.forward;
-    bool inDictionary = false;
+    Vector3 forceDirection = Vector3.forward,
+        forceVector;
+    Quaternion targetLookTo = Quaternion.identity,
+        currentLookTo = Quaternion.identity;
+    bool inDictionary = false,
+        homing = true;
 
     public int Damage
     {
@@ -53,8 +63,10 @@ public class PooledBullets : IPooledObject
     public override void Start()
     {
         base.Start();
-        forceDirection = transform.rotation * (new Vector3(0, 0, force));
+
+        forceDirection = new Vector3(0, 0, force);
         timeStart = Time.time;
+        homing = true;
 
         if(inDictionary == false)
         {
@@ -65,15 +77,34 @@ public class PooledBullets : IPooledObject
             }
             inDictionary = true;
         }
+
+        // Add some force
+        currentLookTo = transform.rotation;
     }
 
     void Update()
     {
-        Body.AddForce(forceDirection, ForceMode.Impulse);
-        if ((Time.time - timeStart) > dieAfter)
+        float duration = (Time.time - timeStart);
+        if (duration > dieAfter)
         {
             Die();
         }
+        else if ((homing == true) && (duration > homeFor))
+        {
+            homing = false;
+        }
+
+        if(homing == true)
+        {
+            targetLookTo = Quaternion.LookRotation(ShipControl.TransformInfo.position - transform.position);
+        }
+        currentLookTo = Quaternion.Lerp(currentLookTo, targetLookTo, (Time.deltaTime * homingLerp));
+    }
+
+    void FixedUpdate()
+    {
+        Body.rotation = currentLookTo;
+        Body.AddRelativeForce(forceDirection, ForceMode.Acceleration);
     }
 
     public void Die()
