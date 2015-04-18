@@ -65,7 +65,7 @@ public class Shooter : IEnemy
                 break;
             case State.Aiming:
             default:
-                lookRotation = Quaternion.LookRotation(ShipControl.Instance.GetPredictedLocation(transform) - transform.position);
+                lookRotation = Quaternion.LookRotation(ShipControl.TransformInfo.position - transform.position);
                 if ((Time.time - lastShot) > shootEvery)
                 {
                     lastShot = Time.time;

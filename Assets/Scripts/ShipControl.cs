@@ -79,18 +79,12 @@ public class ShipControl : MonoBehaviour
         }
     }
 
-    public Vector3 GetPredictedLocation(Transform enemy)
+    public static Transform TransformInfo
     {
-        Vector3 predictedDirection = Vector3.zero;
-        if (IsRamming == true)
+        get
         {
-            predictedDirection = moveDirection * (Vector3.Distance(transform.position, enemy.position) * predictiveMultiplierRam);
+            return instance.transform;
         }
-        else
-        {
-            predictedDirection = moveDirection * (Vector3.Distance(transform.position, enemy.position) * predictiveMultiplierNormal);
-        }
-        return transform.position + predictedDirection;
     }
 
     Rigidbody Body
