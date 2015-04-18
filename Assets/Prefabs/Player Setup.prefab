@@ -48,6 +48,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &169292
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 452298}
+  - 114: {fileID: 11403768}
+  m_Layer: 0
+  m_Name: EnemyCollection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &172990
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,6 +127,7 @@ Transform:
   m_Children:
   - {fileID: 485954}
   - {fileID: 449606}
+  - {fileID: 452298}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &449606
@@ -126,6 +143,18 @@ Transform:
   - {fileID: 473128}
   m_Father: {fileID: 441882}
   m_RootOrder: 1
+--- !u!4 &452298
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 169292}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 441882}
+  m_RootOrder: 2
 --- !u!4 &473128
 Transform:
   m_ObjectHideFlags: 1
@@ -270,6 +299,18 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 176522}
   m_Enabled: 1
+--- !u!114 &11403768
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 169292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4a7a54cf3b5e2a4ab6fe5a0f2ec9a74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allEnemies: []
 --- !u!114 &11423942
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -298,7 +339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea89de2e7e97eec49ba317a0b7680be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  targets: {fileID: 11403768}
   camera: {fileID: 449606}
   forceTowardsTarget: 600
   forceSidewaysSpeed: 20
