@@ -15,6 +15,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &122358
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400808}
+  - 54: {fileID: 5463558}
+  - 95: {fileID: 9572452}
+  - 114: {fileID: 11475092}
+  m_Layer: 0
+  m_Name: Ship
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &137950
 GameObject:
   m_ObjectHideFlags: 0
@@ -39,7 +57,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 449606}
   - 54: {fileID: 5472508}
-  - 114: {fileID: 11423942}
   - 114: {fileID: 11488492}
   m_Layer: 0
   m_Name: MultipurposeCameraRig
@@ -66,7 +83,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &172990
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -75,10 +92,8 @@ GameObject:
   - 33: {fileID: 3310250}
   - 65: {fileID: 6517588}
   - 23: {fileID: 2393096}
-  - 54: {fileID: 5463558}
-  - 114: {fileID: 11475092}
   m_Layer: 0
-  m_Name: Ship
+  m_Name: Graphics
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,6 +118,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &400808
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 122358}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 485954}
+  m_Father: {fileID: 441882}
+  m_RootOrder: 0
 --- !u!4 &407890
 Transform:
   m_ObjectHideFlags: 1
@@ -125,7 +153,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 485954}
+  - {fileID: 400808}
   - {fileID: 449606}
   - {fileID: 452298}
   m_Father: {fileID: 0}
@@ -178,7 +206,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 441882}
+  m_Father: {fileID: 400808}
   m_RootOrder: 0
 --- !u!20 &2059178
 Camera:
@@ -248,7 +276,7 @@ Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 172990}
+  m_GameObject: {fileID: 122358}
   serializedVersion: 2
   m_Mass: 10
   m_Drag: 5
@@ -299,6 +327,23 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 176522}
   m_Enabled: 1
+--- !u!95 &9572452
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 122358}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e0fe4db6845ce814bb1b8eb712ae0d63, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11403768
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -311,29 +356,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allEnemies: []
---- !u!114 &11423942
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 151934}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94b04ec3bda6b7747aa53936ef3b0ae2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clipMoveTime: .0500000007
-  returnTime: .400000006
-  sphereCastRadius: .100000001
-  visualiseInEditor: 1
-  closestDistance: .5
-  dontClipTag: Player
 --- !u!114 &11475092
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 172990}
+  m_GameObject: {fileID: 122358}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea89de2e7e97eec49ba317a0b7680be6, type: 3}
@@ -341,9 +369,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targets: {fileID: 11403768}
   camera: {fileID: 449606}
-  forceTowardsTarget: 600
+  forceTowardsTarget: 1000
+  forceRamming: 2000
   forceSidewaysSpeed: 20
-  rotateLerp: 10
+  rotateLerp: 5
+  rammingOn: 0
 --- !u!114 &11488492
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -352,18 +382,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 151934}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8d3968294210ba4a9d2bb96dfa74a16, type: 3}
+  m_Script: {fileID: 11500000, guid: d5b65ac728f3f2a4a99d3b062d52d4e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Target: {fileID: 485954}
+  m_Target: {fileID: 400808}
   m_AutoTargetPlayer: 1
   m_UpdateType: 0
   m_MoveSpeed: 100
-  m_TurnSpeed: 100
+  m_TurnSpeed: 50
   m_RollSpeed: .5
   m_FollowVelocity: 0
   m_FollowTilt: 1
-  m_SpinTurnLimit: 135
+  m_SpinTurnLimit: 110
   m_TargetVelocityLowerLimit: 4
   m_SmoothTurnTime: .200000003
 --- !u!124 &12494994
