@@ -99,6 +99,14 @@ public class ShipControl : MonoBehaviour
     [SerializeField]
     Text distanceLabel = null;
 
+    [Header("Target")]
+    [SerializeField]
+    AudioSource jetSound = null;
+    [SerializeField]
+    AudioSource hitSound = null;
+    [SerializeField]
+    AudioSource emptySound = null;
+
     Rigidbody bodyCache = null;
     Animator animatorCache = null;
     Vector2 controlInput = Vector2.zero;
@@ -169,6 +177,14 @@ public class ShipControl : MonoBehaviour
                 Animate.SetBool(RamField, rammingOn);
                 hitCollider.gameObject.SetActive(rammingOn == false);
                 ramCollider.gameObject.SetActive(rammingOn == true);
+                if(rammingOn == true)
+                {
+                    jetSound.Play();
+                }
+                else
+                {
+                    jetSound.Stop();
+                }
             }
         }
     }
@@ -203,6 +219,7 @@ public class ShipControl : MonoBehaviour
                 if(newHealth < currentHealth)
                 {
                     timeInvincible = Time.time;
+                    hitSound.Play();
                 }
 
                 // Setup health
@@ -256,6 +273,10 @@ public class ShipControl : MonoBehaviour
             drillCurrent = value;
             emptyDrill.enabled = (drillCurrent < 0);
             drillBar.value = Mathf.Clamp(value, 0, drillMax);
+            if((drillCurrent < 0) && (emptySound.isPlaying == false))
+            {
+                emptySound.Play();
+            }
         }
     }
 
