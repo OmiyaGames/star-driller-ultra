@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class EnemyCollection : MonoBehaviour
@@ -77,12 +78,13 @@ public class EnemyCollection : MonoBehaviour
         }
     }
 
+    
     [SerializeField]
     [ReadOnly]
     List<EnemyInfo> allEnemies = new List<EnemyInfo>();
-    Dictionary<Collider, EnemyInfo> colliderMap = new Dictionary<Collider, EnemyInfo>();
 
     int currentEnemyIndex = 0;
+    readonly Dictionary<Collider, EnemyInfo> colliderMap = new Dictionary<Collider, EnemyInfo>();
 
     public List<EnemyInfo> AllEnemies
     {
