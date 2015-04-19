@@ -116,11 +116,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 165750}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7854ee67e713dc4788df3ad9a6335b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 602ef18bf823f1e4f8fa0c87005991e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  displayName: Asteroid
   maxHealth: 1
   explosion: {fileID: 11442888, guid: ff83a69372615b344b1b5dd9ca8d18f1, type: 2}
+  recoverHealth: 10
 --- !u!135 &13545946
 SphereCollider:
   m_ObjectHideFlags: 1

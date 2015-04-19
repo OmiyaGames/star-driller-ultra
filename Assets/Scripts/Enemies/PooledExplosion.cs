@@ -31,7 +31,7 @@ public class PooledExplosion : IPooledObject
     IEnumerator Die()
     {
         yield return new WaitForSeconds(dieAfter);
-        soundCache.Stop(); ;
+        soundCache.Stop();
         foreach (ParticleSystem system in particlesCache)
         {
             system.Stop();
