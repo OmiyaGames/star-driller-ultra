@@ -64,6 +64,8 @@ public class PooledBullets : IPooledObject
     {
         base.Start();
 
+        Body.velocity = Vector3.zero;
+
         forceDirection = new Vector3(0, 0, force);
         timeStart = Time.time;
         homing = true;
