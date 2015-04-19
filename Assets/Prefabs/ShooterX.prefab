@@ -380,8 +380,8 @@ MonoBehaviour:
   - {fileID: 479028}
   - {fileID: 406144}
   - {fileID: 477216}
-  shootEveryMin: 1
-  shootEveryMax: 2
+  shootEveryMin: 2
+  shootEveryMax: 4
   shootEvery: 1
   charge: .100000001
   cooldown: .25

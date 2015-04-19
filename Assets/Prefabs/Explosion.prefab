@@ -143,8 +143,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 108c5039c6241934f8e453e3467e2dc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  centerPitch: 1
-  pitchMutationRange: {x: -.800000012, y: .800000012}
+  centerPitch: .600000024
+  pitchMutationRange: {x: -.5, y: .5}
 --- !u!114 &11442888
 MonoBehaviour:
   m_ObjectHideFlags: 1

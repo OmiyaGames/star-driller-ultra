@@ -446,19 +446,15 @@ public class ShipControl : MonoBehaviour
         }
         else if(PooledBullets.colliderMap.TryGetValue(info.collider, out bullet) == true)
         {
-            if(IsRamming == true)
-            {
-                CurrentHealth -= Mathf.RoundToInt(bullet.Damage * rammingDefenseMultiplier);
-            }
-            else
+            if(IsRamming == false)
             {
                 CurrentHealth -= bullet.Damage;
+
+                // Pause for a short bit
+                Pause(pauseHurtLength);
             }
             bullet.Die();
             Singleton.Get<PoolingManager>().GetInstance(hitExplosion.gameObject, info.contacts[0].point, Quaternion.identity);
-
-            // Pause for a short bit
-            Pause(pauseHurtLength);
         }
     }
 
@@ -475,15 +471,15 @@ public class ShipControl : MonoBehaviour
         }
         else
         {
-            // Inflict damage to self
-            CurrentHealth -= enemyHitDamage;
-
             // Fly away from the enemy
             FlightDirection = FlightMode.AwayFromTheTarget;
             timeCollisionStarted = Time.time;
 
             // Pause for a short bit
             Pause(pauseHurtLength);
+
+            // Inflict damage to self
+            CurrentHealth -= enemyHitDamage;
         }
 
         // Grab the next enemy if this one is dead
@@ -505,6 +501,13 @@ public class ShipControl : MonoBehaviour
         if(complete == true)
         {
             completeMenu.Show();
+
+            // Unlock the next level
+            GameSettings settings = Singleton.Get<GameSettings>();
+            if(Application.loadedLevel >= settings.NumLevelsUnlocked)
+            {
+                settings.NumLevelsUnlocked = Mathf.Clamp((Application.loadedLevel + 1), 1, settings.NumLevels);
+            }
         }
         else
         {
@@ -514,6 +517,7 @@ public class ShipControl : MonoBehaviour
         pauseStartedRealTime = -1f;
 
         jetSound.Stop();
+        enabled = false;
         Time.timeScale = 0.1f;
     }
 
