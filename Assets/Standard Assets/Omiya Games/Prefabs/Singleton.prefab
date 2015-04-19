@@ -1229,6 +1229,8 @@ MonoBehaviour:
     displayName: Stage 1
   - sceneName: Stage 2
     displayName: Stage 2
+  - sceneName: Stage 3
+    displayName: Stage 3
 --- !u!114 &11400020
 MonoBehaviour:
   m_ObjectHideFlags: 1
