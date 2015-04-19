@@ -96,6 +96,9 @@ public class ShipControl : MonoBehaviour
     [SerializeField]
     [Range(0, 0.5f)]
     float pauseHurtLength = 0.05f;
+    [SerializeField]
+    [Range(0, 3)]
+    float drillRecoverAfterKill = 0.25f;
 
     [Header("Menus")]
     [SerializeField]
@@ -132,6 +135,8 @@ public class ShipControl : MonoBehaviour
     AudioMutator emptySound = null;
     [SerializeField]
     AudioMutator refillSound = null;
+    [SerializeField]
+    AudioMutator dangerSound = null;
 
     [Header("Particles")]
     [SerializeField]
@@ -270,7 +275,15 @@ public class ShipControl : MonoBehaviour
 
                 // Setup UI
                 lifeBar.value = currentHealth;
-                dangerHealth.enabled = (currentHealth <= displayDangerBelow);
+                if(currentHealth <= displayDangerBelow)
+                {
+                    dangerHealth.enabled = true;
+                    dangerSound.Play();
+                }
+                else
+                {
+                    dangerHealth.enabled = false;
+                }
 
                 // Check for death
                 if (currentHealth <= 0)
@@ -478,6 +491,9 @@ public class ShipControl : MonoBehaviour
             // Inflict damage to enemy
             enemy.EnemyScript.CurrentHealth -= 1;
             cameraAnimation.SetTrigger(KilledTrigger);
+
+            // Replenish drill
+            CurrentDrill += drillRecoverAfterKill;
 
             // Pause for a short bit
             Pause(pauseKillLength);

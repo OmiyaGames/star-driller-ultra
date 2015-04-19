@@ -20,4 +20,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Stage 6.unity
   - enabled: 1
+    path: Assets/Scenes/Stage 7.unity
+  - enabled: 1
+    path: Assets/Scenes/Stage 8.unity
+  - enabled: 1
     path: Assets/Scenes/Credits.unity
