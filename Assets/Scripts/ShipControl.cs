@@ -137,6 +137,10 @@ public class ShipControl : MonoBehaviour
     AudioMutator refillSound = null;
     [SerializeField]
     AudioMutator dangerSound = null;
+    [SerializeField]
+    AudioSource successSound = null;
+    [SerializeField]
+    AudioSource failSound = null;
 
     [Header("Particles")]
     [SerializeField]
@@ -532,10 +536,16 @@ public class ShipControl : MonoBehaviour
             {
                 settings.NumLevelsUnlocked = Mathf.Clamp((Application.loadedLevel + 1), 1, settings.NumLevels);
             }
+
+            // Play sound 
+            successSound.Play();
         }
         else
         {
             deadMenu.Show();
+
+            // Play sound 
+            failSound.Play();
         }
 
         pauseStartedRealTime = -1f;
