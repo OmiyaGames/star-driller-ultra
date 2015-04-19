@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -7,6 +8,10 @@ public class ShipControl : MonoBehaviour
 {
     static ShipControl instance = null;
     public const string RamField = "ramming";
+    public const string HorizontalField = "horizontal";
+    public const string VerticalField = "vertical";
+    public const string FlightTowardsTarget = "Forward";
+    public const string FlightAwayFromTarget = "Reverse";
 
     public enum FlightMode
     {
@@ -45,8 +50,14 @@ public class ShipControl : MonoBehaviour
     [Range(0, 5)]
     float reverseFor = 2f;
     [SerializeField]
+    [Range(0, 5)]
+    float invincibleFor = 2f;
+    [SerializeField]
     [Range(1, 100)]
     int maxHealth = 10;
+    [SerializeField]
+    [Range(1, 50)]
+    int displayDangerBelow = 3;
     [SerializeField]
     [Range(0, 1)]
     float enemyHitDamageRatio = 0.3f;
@@ -58,6 +69,30 @@ public class ShipControl : MonoBehaviour
     [Range(0, 1)]
     float rammingDefenseMultiplier = 0.5f;
 
+    [Header("Drill Stats")]
+    [SerializeField]
+    float drillMax = 10f;
+    [SerializeField]
+    float drillDepletionRate = 1f;
+    [SerializeField]
+    float drillCooldownSmall = 1f;
+    [SerializeField]
+    float drillCooldownLong = 3f;
+    [SerializeField]
+    float drillRecoverRate = 1f;
+
+    [Header("Menus")]
+    [SerializeField]
+    Text flightModeLabel;
+    [SerializeField]
+    Slider lifeBar;
+    [SerializeField]
+    Slider drillBar;
+    [SerializeField]
+    Text emptyDrill;
+    [SerializeField]
+    Text dangerHealth;
+    
     Rigidbody bodyCache = null;
     Animator animatorCache = null;
     Vector2 controlInput = Vector2.zero;
@@ -67,7 +102,10 @@ public class ShipControl : MonoBehaviour
     Quaternion currentRotation = Quaternion.identity;
     Quaternion lookRotation = Quaternion.identity;
     FlightMode direction = FlightMode.ToTheTarget;
-    float timeCollisionStarted = -1f;
+    float timeCollisionStarted = -1f,
+        timeInvincible = -1f,
+        drillCurrent = 0,
+        timeLastDrilled = 0;
     int enemyHitDamage = 1,
         currentHealth = 0;
     
@@ -145,19 +183,73 @@ public class ShipControl : MonoBehaviour
         }
         set
         {
+            // Check invincibility frames
+            if ((Time.time - timeInvincible) < invincibleFor)
+            {
+                return;
+            }
+
+            // Update health
             int newHealth = Mathf.Clamp(value, 0, maxHealth);
             if(currentHealth != newHealth)
             {
+                // If decreasing for health, flag for invincibility
+                if(newHealth < currentHealth)
+                {
+                    timeInvincible = Time.time;
+                }
+
+                // Setup health
                 currentHealth = newHealth;
 
-                // FIXME: do something on death!
-                Debug.Log(currentHealth);
+                // Setup UI
+                lifeBar.value = currentHealth;
+                dangerHealth.enabled = (currentHealth <= displayDangerBelow);
 
+                // Check for death
                 if (currentHealth <= 0)
                 {
+                    // FIXME: do something on death!
                     Finish();
                 }
             }
+        }
+    }
+
+    public FlightMode FlightDirection
+    {
+        get
+        {
+            return direction;
+        }
+        set
+        {
+            if(direction != value)
+            {
+                direction = value;
+                if(direction == FlightMode.ToTheTarget)
+                {
+                    flightModeLabel.text = FlightTowardsTarget;
+                }
+                else
+                {
+                    flightModeLabel.text = FlightAwayFromTarget;
+                }
+            }
+        }
+    }
+
+    float CurrentDrill
+    {
+        get
+        {
+            return drillCurrent;
+        }
+        set
+        {
+            drillCurrent = value;
+            emptyDrill.enabled = (drillCurrent < 0);
+            drillBar.value = Mathf.Clamp(value, 0, drillMax);
         }
     }
 
@@ -165,9 +257,33 @@ public class ShipControl : MonoBehaviour
     {
         instance = this;
         Time.timeScale = 1;
+
+        // Setup targets
         targets.Setup(this);
+
+        // Setup stats
         currentHealth = maxHealth;
         enemyHitDamage = Mathf.RoundToInt(maxHealth * enemyHitDamageRatio);
+        drillCurrent = drillMax;
+        timeLastDrilled = -1;
+        timeCollisionStarted = -1f;
+        timeInvincible = -1f;
+
+        // Setup UI
+        lifeBar.wholeNumbers = true;
+        lifeBar.minValue = 0;
+        lifeBar.maxValue = maxHealth;
+        lifeBar.value = currentHealth;
+
+        drillBar.wholeNumbers = false;
+        drillBar.minValue = 0;
+        drillBar.maxValue = drillMax;
+        drillBar.value = currentHealth;
+
+        flightModeLabel.text = FlightTowardsTarget;
+        
+        dangerHealth.enabled = false;
+        emptyDrill.enabled = false;
     }
 
 	void Update ()
@@ -181,7 +297,9 @@ public class ShipControl : MonoBehaviour
         // Grab controls
         controlInput.x = Input.GetAxis("Horizontal");
         controlInput.y = Input.GetAxis("Vertical");
-        IsRamming = Input.GetButton("Fire1");
+        IsRamming = CheckIfRamming();
+        Animate.SetFloat(HorizontalField, controlInput.x);
+        Animate.SetFloat(VerticalField, controlInput.y);
         if (Input.GetButtonDown("NextTarget") == true)
         {
             targets.NextEnemy();
@@ -195,13 +313,13 @@ public class ShipControl : MonoBehaviour
         targetToShip = (targets.CurrentEnemy.EnemyTransform.position - transform.position);
         targetToShip.Normalize();
         moveDirection = targetToShip;
-        if (direction == FlightMode.AwayFromTheTarget)
+        if (FlightDirection == FlightMode.AwayFromTheTarget)
         {
             moveDirection *= -1f;
             if((Time.time - timeCollisionStarted) > reverseFor)
             {
                 timeCollisionStarted = -1f;
-                direction = FlightMode.ToTheTarget;
+                FlightDirection = FlightMode.ToTheTarget;
             }
         }
         lookRotation = Quaternion.LookRotation(moveDirection);
@@ -269,7 +387,7 @@ public class ShipControl : MonoBehaviour
             CurrentHealth -= enemyHitDamage;
 
             // Fly away from the enemy
-            direction = FlightMode.AwayFromTheTarget;
+            FlightDirection = FlightMode.AwayFromTheTarget;
             timeCollisionStarted = Time.time;
         }
 
@@ -290,5 +408,57 @@ public class ShipControl : MonoBehaviour
     void Finish()
     {
         Time.timeScale = 0.1f;
+    }
+
+    bool CheckIfRamming()
+    {
+        bool returnFlag = false;
+
+        // Check if we have the button down
+        if(Input.GetButton("Fire1") == true)
+        {
+            // Check if we have any drill left
+            if(CurrentDrill > 0)
+            {
+                // Indicate we are ramming
+                returnFlag = true;
+
+                // Decrement drilling
+                CurrentDrill -= (Time.deltaTime * drillDepletionRate);
+            }
+
+            // Keep track of when we were drilling
+            timeLastDrilled = Time.time;
+        }
+        else if (timeLastDrilled > 0)
+        {
+            if (CurrentDrill > 0)
+            {
+                // Check if we need to recover drilling
+                RecoverDrill(drillCooldownSmall);
+            }
+            else
+            {
+                // Check if we need to recover drilling
+                RecoverDrill(drillCooldownLong);
+            }
+        }
+        return returnFlag;
+    }
+
+    private void RecoverDrill(float cooldown)
+    {
+        if ((Time.time - timeLastDrilled) > cooldown)
+        {
+            // Increment drill
+            CurrentDrill += (Time.deltaTime * drillRecoverRate);
+
+            // Make sure it doesn't exceed max
+            if (CurrentDrill > drillMax)
+            {
+                CurrentDrill = drillMax;
+                timeLastDrilled = -1f;
+            }
+        }
     }
 }
