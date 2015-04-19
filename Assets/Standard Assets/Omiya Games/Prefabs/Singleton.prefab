@@ -1225,8 +1225,8 @@ MonoBehaviour:
   levels:
   - sceneName: Menu
     displayName: Menu
-  - sceneName: Level 1
-    displayName: Level 1
+  - sceneName: Stage 1
+    displayName: Stage 1
 --- !u!114 &11400020
 MonoBehaviour:
   m_ObjectHideFlags: 1
