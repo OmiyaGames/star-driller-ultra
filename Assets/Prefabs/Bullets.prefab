@@ -57,7 +57,7 @@ Transform:
   m_GameObject: {fileID: 111582}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.20000005, y: 22.7000008, z: 11.1999998}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 478766}
   m_Father: {fileID: 0}
@@ -100,8 +100,8 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 111582}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: .100000001
   m_AngularDrag: .0500000007
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -194,10 +194,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2
-  force: 20
+  force: 5
   dieAfter: 5
   homeFor: 10
-  homingLerp: 20
+  homingLerp: 10
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

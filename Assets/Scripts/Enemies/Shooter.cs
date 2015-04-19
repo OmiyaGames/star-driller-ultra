@@ -39,7 +39,7 @@ public class Shooter : IEnemy
     }
 
 	// Update is called once per frame
-	void Update ()
+	protected void Update ()
     {
         switch(state)
         {
@@ -48,7 +48,7 @@ public class Shooter : IEnemy
                 {
                     foreach(Transform spawnAt in spawnPoints)
                     {
-                        GameObject instance = Singleton.Get<PoolingManager>().GetInstance(bullets.gameObject, spawnAt.position, spawnAt.rotation);
+                        GameObject instance = Singleton.Get<PoolingManager>().GetInstance(bullets.gameObject, spawnAt.position, transform.rotation);
                         PooledBullets bullet = instance.GetComponent<PooledBullets>();
                         bullet.Rotation = transform.rotation;
                     }
@@ -73,6 +73,11 @@ public class Shooter : IEnemy
                 }
                 break;
         }
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, (Time.deltaTime * rotateLerp));
+        UpdateRotation();
 	}
+
+    protected virtual void UpdateRotation()
+    {
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, (Time.deltaTime * rotateLerp));
+    }
 }

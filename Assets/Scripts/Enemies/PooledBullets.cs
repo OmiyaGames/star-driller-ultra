@@ -10,13 +10,13 @@ public class PooledBullets : IPooledObject
     [Range(1, 10)]
     int damage = 2;
     [SerializeField]
-    [Range(1, 100)]
+    [Range(1, 20)]
     float force = 50f;
     [SerializeField]
     [Range(1, 20)]
     float dieAfter = 5f;
     [SerializeField]
-    [Range(0, 20)]
+    [Range(-1, 20)]
     float homeFor = 0.5f;
     [SerializeField]
     [Range(0, 20)]
@@ -89,7 +89,7 @@ public class PooledBullets : IPooledObject
         {
             Die();
         }
-        else if ((homing == true) && (duration > homeFor))
+        else if ((homeFor > 0) && (homing == true) && (duration > homeFor))
         {
             homing = false;
         }
@@ -104,7 +104,7 @@ public class PooledBullets : IPooledObject
     void FixedUpdate()
     {
         Body.rotation = currentLookTo;
-        Body.AddRelativeForce(forceDirection, ForceMode.Acceleration);
+        Body.AddRelativeForce(forceDirection, ForceMode.Impulse);
     }
 
     public void Die()
