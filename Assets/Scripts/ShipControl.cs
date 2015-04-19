@@ -10,6 +10,8 @@ public class ShipControl : MonoBehaviour
     public const string RamField = "ramming";
     public const string HorizontalField = "horizontal";
     public const string VerticalField = "vertical";
+    public const string HitTrigger = "hit";
+    public const string KilledTrigger = "kill";
     public const string FlightTowardsTarget = "Forward";
     public const string FlightAwayFromTarget = "Reverse";
 
@@ -71,14 +73,19 @@ public class ShipControl : MonoBehaviour
 
     [Header("Drill Stats")]
     [SerializeField]
+    [Range(0, 10)]
     float drillMax = 10f;
     [SerializeField]
+    [Range(0, 3)]
     float drillDepletionRate = 1f;
     [SerializeField]
+    [Range(0, 3)]
     float drillCooldownSmall = 1f;
     [SerializeField]
+    [Range(0, 3)]
     float drillCooldownLong = 3f;
     [SerializeField]
+    [Range(0, 3)]
     float drillRecoverRate = 1f;
 
     [Header("Menus")]
@@ -99,13 +106,23 @@ public class ShipControl : MonoBehaviour
     [SerializeField]
     Text distanceLabel = null;
 
-    [Header("Target")]
+    [Header("Sound")]
     [SerializeField]
-    AudioSource jetSound = null;
+    AudioMutator jetSound = null;
     [SerializeField]
-    AudioSource hitSound = null;
+    AudioMutator hitSound = null;
     [SerializeField]
-    AudioSource emptySound = null;
+    AudioMutator emptySound = null;
+    [SerializeField]
+    AudioMutator refillSound = null;
+
+    [Header("Particles")]
+    [SerializeField]
+    ParticleSystem ramParticles = null;
+    [SerializeField]
+    Animator cameraAnimation = null;
+    [SerializeField]
+    PooledExplosion hitExplosion = null;
 
     Rigidbody bodyCache = null;
     Animator animatorCache = null;
@@ -175,15 +192,18 @@ public class ShipControl : MonoBehaviour
             {
                 rammingOn = value;
                 Animate.SetBool(RamField, rammingOn);
+                cameraAnimation.SetBool(RamField, rammingOn);
                 hitCollider.gameObject.SetActive(rammingOn == false);
                 ramCollider.gameObject.SetActive(rammingOn == true);
                 if(rammingOn == true)
                 {
                     jetSound.Play();
+                    ramParticles.Play();
                 }
                 else
                 {
                     jetSound.Stop();
+                    ramParticles.Stop();
                 }
             }
         }
@@ -220,6 +240,7 @@ public class ShipControl : MonoBehaviour
                 {
                     timeInvincible = Time.time;
                     hitSound.Play();
+                    cameraAnimation.SetTrigger(HitTrigger);
                 }
 
                 // Setup health
@@ -273,9 +294,12 @@ public class ShipControl : MonoBehaviour
             drillCurrent = value;
             emptyDrill.enabled = (drillCurrent < 0);
             drillBar.value = Mathf.Clamp(value, 0, drillMax);
-            if((drillCurrent < 0) && (emptySound.isPlaying == false))
+            if(drillCurrent < 0)
             {
-                emptySound.Play();
+                if (emptySound.Audio.isPlaying == false)
+                {
+                    emptySound.Play();
+                }
             }
         }
     }
@@ -311,6 +335,7 @@ public class ShipControl : MonoBehaviour
         
         dangerHealth.enabled = false;
         emptyDrill.enabled = false;
+        ramParticles.Stop();
     }
 
 	void Update ()
@@ -393,6 +418,7 @@ public class ShipControl : MonoBehaviour
         if (targets.ColliderMap.TryGetValue(info.collider, out enemy) == true)
         {
             HitEnemy(enemy);
+            Singleton.Get<PoolingManager>().GetInstance(hitExplosion.gameObject, info.contacts[0].point, Quaternion.identity);
         }
         else if(PooledBullets.colliderMap.TryGetValue(info.collider, out bullet) == true)
         {
@@ -405,6 +431,7 @@ public class ShipControl : MonoBehaviour
                 CurrentHealth -= bullet.Damage;
             }
             bullet.Die();
+            Singleton.Get<PoolingManager>().GetInstance(hitExplosion.gameObject, info.contacts[0].point, Quaternion.identity);
         }
     }
 
@@ -414,6 +441,7 @@ public class ShipControl : MonoBehaviour
         {
             // Inflict damage to enemy
             enemy.EnemyScript.CurrentHealth -= 1;
+            cameraAnimation.SetTrigger(KilledTrigger);
         }
         else
         {
@@ -460,6 +488,10 @@ public class ShipControl : MonoBehaviour
                 // Decrement drilling
                 CurrentDrill -= (Time.deltaTime * drillDepletionRate);
             }
+            else if (emptySound.Audio.isPlaying == false)
+            {
+                emptySound.Play();
+            }
 
             // Keep track of when we were drilling
             timeLastDrilled = Time.time;
@@ -469,21 +501,27 @@ public class ShipControl : MonoBehaviour
             if (CurrentDrill > 0)
             {
                 // Check if we need to recover drilling
-                RecoverDrill(drillCooldownSmall);
+                RecoverDrill(drillCooldownSmall, false);
             }
             else
             {
                 // Check if we need to recover drilling
-                RecoverDrill(drillCooldownLong);
+                RecoverDrill(drillCooldownLong, true);
             }
         }
         return returnFlag;
     }
 
-    private void RecoverDrill(float cooldown)
+    private void RecoverDrill(float cooldown, bool playSound)
     {
         if ((Time.time - timeLastDrilled) > cooldown)
         {
+            if ((playSound == true) && (refillSound.Audio.isPlaying == false))
+            {
+                // Play the refill sound
+                refillSound.Play();
+            }
+
             // Increment drill
             CurrentDrill += (Time.deltaTime * drillRecoverRate);
 
