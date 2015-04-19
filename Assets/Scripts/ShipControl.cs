@@ -92,7 +92,13 @@ public class ShipControl : MonoBehaviour
     Text emptyDrill;
     [SerializeField]
     Text dangerHealth;
-    
+
+    [Header("Target")]
+    [SerializeField]
+    GameObject targetReticle = null;
+    [SerializeField]
+    Text distanceLabel = null;
+
     Rigidbody bodyCache = null;
     Animator animatorCache = null;
     Vector2 controlInput = Vector2.zero;
@@ -291,8 +297,15 @@ public class ShipControl : MonoBehaviour
         // Make sure there are enemies
         if(targets.HasEnemy == false)
         {
+            targetReticle.SetActive(false);
             return;
         }
+
+        // Position the target reticle
+        targetReticle.SetActive(true);
+        targetReticle.transform.position = targets.CurrentEnemy.EnemyTransform.position;
+        targetReticle.transform.rotation = camera.rotation;
+        distanceLabel.text = Vector3.Distance(transform.position, targets.CurrentEnemy.EnemyTransform.position).ToString("0.0");
 
         // Grab controls
         controlInput.x = Input.GetAxis("Horizontal");
