@@ -1112,6 +1112,8 @@ MonoBehaviour:
   - {fileID: 111582, guid: 82ca831b31b6d744aba6232136097e4d, type: 2}
   - {fileID: 144924, guid: ff83a69372615b344b1b5dd9ca8d18f1, type: 2}
   - {fileID: 130414, guid: 0caad14a10fe9f44f8fee8327794addf, type: 2}
+  - {fileID: 111582, guid: a1f8830d926dbd94883fe24d9024631b, type: 2}
+  - {fileID: 111582, guid: 2b48997d75b68fa4092b89263bfb94c3, type: 2}
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1231,6 +1233,8 @@ MonoBehaviour:
     displayName: Stage 2
   - sceneName: Stage 3
     displayName: Stage 3
+  - sceneName: Stage 4
+    displayName: Stage 4
 --- !u!114 &11400020
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -30,7 +30,7 @@ GameObject:
   - 114: {fileID: 11463038}
   - 54: {fileID: 5464700}
   m_Layer: 0
-  m_Name: ShooterXX
+  m_Name: ShooterX
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,6 +54,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &177916
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 479028}
+  - 33: {fileID: 3343252}
+  - 23: {fileID: 2367140}
+  - 95: {fileID: 9536644}
+  m_Layer: 0
+  m_Name: cannonsHoming
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &193120
 GameObject:
   m_ObjectHideFlags: 0
@@ -66,7 +84,7 @@ GameObject:
   - 23: {fileID: 2315640}
   - 95: {fileID: 9539830}
   m_Layer: 0
-  m_Name: cannonsHoming
+  m_Name: cannonsHoming 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,7 +109,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 111090}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: -1.62920685e-07}
-  m_LocalPosition: {x: -.75, y: 0, z: 0}
+  m_LocalPosition: {x: -.75, y: .356999993, z: 0}
   m_LocalScale: {x: .300000012, y: .300000012, z: .899999976}
   m_Children: []
   m_Father: {fileID: 437876}
@@ -107,8 +125,9 @@ Transform:
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 402130}
-  - {fileID: 477216}
+  - {fileID: 479028}
   - {fileID: 406144}
+  - {fileID: 477216}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &477216
@@ -118,7 +137,19 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 193120}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -1.62920685e-07}
-  m_LocalPosition: {x: .75, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -.882000029, z: 0}
+  m_LocalScale: {x: .300000012, y: .300000012, z: .900000036}
+  m_Children: []
+  m_Father: {fileID: 437876}
+  m_RootOrder: 3
+--- !u!4 &479028
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 177916}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: -1.62920685e-07}
+  m_LocalPosition: {x: .75, y: .356999993, z: 0}
   m_LocalScale: {x: .300000012, y: .300000012, z: .899999976}
   m_Children: []
   m_Father: {fileID: 437876}
@@ -158,6 +189,30 @@ MeshRenderer:
   m_ReceiveShadows: 1
   m_Materials:
   - {fileID: 2100000, guid: 0a01929d58fbb5d4d942df2e3b067a1f, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!23 &2367140
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 177916}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 88b4e3d3d8aa4a7428dd5474f26718c1, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -216,6 +271,13 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 111090}
   m_Mesh: {fileID: 4300000, guid: 7b6f0cc9494c80848878ec608a8dc03a, type: 3}
+--- !u!33 &3343252
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 177916}
+  m_Mesh: {fileID: 4300000, guid: 7b6f0cc9494c80848878ec608a8dc03a, type: 3}
 --- !u!54 &5464700
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -231,6 +293,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &9536644
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 177916}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 7b6f0cc9494c80848878ec608a8dc03a, type: 3}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!95 &9539830
 Animator:
   serializedVersion: 3
@@ -293,13 +372,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f42ca7b2a503f74e81ccfce95fa59ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayName: Turret XX
+  displayName: Turret X
   maxHealth: 1
   explosion: {fileID: 11442888, guid: ff83a69372615b344b1b5dd9ca8d18f1, type: 2}
   bullets: {fileID: 11489126, guid: a1f8830d926dbd94883fe24d9024631b, type: 2}
   spawnPoints:
-  - {fileID: 477216}
+  - {fileID: 479028}
   - {fileID: 406144}
+  - {fileID: 477216}
   shootEveryMin: 1
   shootEveryMax: 2
   shootEvery: 1
