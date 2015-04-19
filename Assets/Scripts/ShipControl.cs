@@ -47,7 +47,9 @@ public class ShipControl : MonoBehaviour
 
     [Header("Conditions")]
     [SerializeField]
+    #if !UNITY_WEBGL
     [ReadOnly]
+    #endif
     bool rammingOn = false;
     [SerializeField]
     [Range(0, 5)]
