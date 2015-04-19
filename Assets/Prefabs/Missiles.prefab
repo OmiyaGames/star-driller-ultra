@@ -16,39 +16,39 @@ GameObject:
   - 114: {fileID: 11410836}
   - 114: {fileID: 11410504}
   m_Layer: 0
-  m_Name: Bullets
+  m_Name: Missiles
   m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &195036
+--- !u!1 &177848
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 478766}
-  - 33: {fileID: 3318116}
-  - 23: {fileID: 2335300}
-  - 95: {fileID: 9503574}
+  - 4: {fileID: 447260}
+  - 33: {fileID: 3343320}
+  - 23: {fileID: 2349932}
+  - 95: {fileID: 9517738}
   m_Layer: 0
-  m_Name: bullet
+  m_Name: missile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &478766
+--- !u!4 &447260
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 195036}
+  m_GameObject: {fileID: 177848}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .240499854, y: .240499854, z: .679283679}
+  m_LocalPosition: {x: 0, y: -.0430000015, z: .00999999978}
+  m_LocalScale: {x: .240499899, y: .240499899, z: .513603926}
   m_Children: []
   m_Father: {fileID: 482684}
   m_RootOrder: 0
@@ -59,23 +59,23 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 111582}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.20000005, y: 22.7000008, z: 11.1999998}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: 0, y: 0, z: 14.8999996}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children:
-  - {fileID: 478766}
+  - {fileID: 447260}
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!23 &2335300
+--- !u!23 &2349932
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 195036}
+  m_GameObject: {fileID: 177848}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: a66de8022a450714e895ef2bee83792b, type: 2}
+  - {fileID: 2100000, guid: 7e1238a6e2258b048957f280b751509d, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -89,13 +89,13 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!33 &3318116
+--- !u!33 &3343320
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 195036}
-  m_Mesh: {fileID: 4300000, guid: 9e6a41c673dbe584fb88330a5a2c9238, type: 3}
+  m_GameObject: {fileID: 177848}
+  m_Mesh: {fileID: 4300000, guid: 92959afc05beb4d4497c4bb8475cfb07, type: 3}
 --- !u!54 &5469496
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -121,7 +121,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: .400000006, y: .400000006, z: 1}
+  m_Size: {x: .349999994, y: .349999994, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &8295948
 AudioSource:
@@ -192,15 +192,15 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
---- !u!95 &9503574
+--- !u!95 &9517738
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 195036}
+  m_GameObject: {fileID: 177848}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 9e6a41c673dbe584fb88330a5a2c9238, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 92959afc05beb4d4497c4bb8475cfb07, type: 3}
   m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -239,13 +239,13 @@ TrailRenderer:
   m_Colors:
     m_Color[0]:
       serializedVersion: 2
-      rgba: 4278190335
+      rgba: 4278229503
     m_Color[1]:
       serializedVersion: 2
-      rgba: 4285230079
+      rgba: 4285712383
     m_Color[2]:
       serializedVersion: 2
-      rgba: 4291546111
+      rgba: 4291291647
     m_Color[3]:
       serializedVersion: 2
       rgba: 4294967295
@@ -289,10 +289,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf494ecd4a07b904883cbb33c30158a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
-  force: 5
-  dieAfter: 5
-  homeFor: 5
+  damage: 3
+  force: 6
+  dieAfter: 10
+  homeFor: -1
   homingLerp: 10
 --- !u!1001 &100100000
 Prefab:
