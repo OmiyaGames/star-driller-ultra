@@ -322,7 +322,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22400012, guid: ee084f5668626f4488b2b30a0623bda1, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 611.992798
+      value: 988.20343
       objectReference: {fileID: 0}
     - target: {fileID: 11400014, guid: ee084f5668626f4488b2b30a0623bda1, type: 2}
       propertyPath: m_Sprite
