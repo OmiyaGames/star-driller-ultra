@@ -118,6 +118,8 @@ public class ShipControl : MonoBehaviour
     Text distanceLabel = null;
     [SerializeField]
     Text enemyNameLabel = null;
+    [SerializeField]
+    Text enemyNumbersLabel = null;
 
     [Header("Sound")]
     [SerializeField]
@@ -366,6 +368,7 @@ public class ShipControl : MonoBehaviour
         targetReticle.transform.rotation = camera.rotation;
         distanceLabel.text = Vector3.Distance(transform.position, targets.CurrentEnemy.EnemyTransform.position).ToString("0.0");
         enemyNameLabel.text = targets.CurrentEnemy.EnemyScript.DisplayName;
+        enemyNumbersLabel.text = targets.AllEnemies.Count.ToString();
 
         // Grab controls
         controlInput.x = CrossPlatformInputManager.GetAxis("Horizontal");
