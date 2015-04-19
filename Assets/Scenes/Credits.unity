@@ -848,7 +848,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11440322, guid: 4a210f970d0188d489602d2283137a80, type: 2}
       propertyPath: displayName
-      value: Title
+      value: Star Driller Ultra
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4a210f970d0188d489602d2283137a80, type: 2}
