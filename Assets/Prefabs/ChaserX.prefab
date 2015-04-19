@@ -202,8 +202,8 @@ MonoBehaviour:
   bullets: {fileID: 11489126, guid: a1f8830d926dbd94883fe24d9024631b, type: 2}
   spawnPoints:
   - {fileID: 460700}
-  shootEveryMin: 1
-  shootEveryMax: 2
+  shootEveryMin: 2
+  shootEveryMax: 4
   shootEvery: 2
   charge: .100000001
   cooldown: .25

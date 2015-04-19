@@ -59,7 +59,7 @@ Transform:
   m_GameObject: {fileID: 111582}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 14.8999996}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 447260}
   m_Father: {fileID: 0}
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 108c5039c6241934f8e453e3467e2dc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  centerPitch: 1
+  centerPitch: .600000024
   pitchMutationRange: {x: -.5, y: .5}
 --- !u!114 &11410836
 MonoBehaviour:
@@ -272,8 +272,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 3
-  force: 6
-  dieAfter: 10
+  force: 7.5
+  dieAfter: 12.5
   homeFor: -1
   homingLerp: 10
 --- !u!1001 &100100000

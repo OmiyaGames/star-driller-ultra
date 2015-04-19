@@ -16,7 +16,7 @@ public class StartMenu : MonoBehaviour
         }
     }
 
-    void Setup()
+    void Start()
     {
         if (settings == null)
         {
@@ -32,20 +32,9 @@ public class StartMenu : MonoBehaviour
         }
     }
 
-    public void Show()
-    {
-        Setup();
-        if (IsVisible == false)
-        {
-            // Make the game object active
-            gameObject.SetActive(true);
-        }
-    }
-
     public void Hide()
     {
         // Make the game object inactive
-        Setup();
         gameObject.SetActive(false);
     }
 

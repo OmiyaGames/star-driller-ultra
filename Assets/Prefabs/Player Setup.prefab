@@ -1298,7 +1298,7 @@ Transform:
   m_LocalScale: {x: .5, y: .5, z: .5}
   m_Children: []
   m_Father: {fileID: 481750}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!4 &422286
 Transform:
   m_ObjectHideFlags: 1
@@ -1335,7 +1335,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 481750}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!4 &440994
 Transform:
   m_ObjectHideFlags: 1
@@ -1403,7 +1403,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 481750}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!4 &452298
 Transform:
   m_ObjectHideFlags: 1
@@ -1427,7 +1427,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 481750}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &468880
 Transform:
   m_ObjectHideFlags: 1
@@ -1439,7 +1439,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 481750}
-  m_RootOrder: 6
+  m_RootOrder: 7
 --- !u!4 &471800
 Transform:
   m_ObjectHideFlags: 1
@@ -1457,7 +1457,6 @@ Transform:
   - {fileID: 402260}
   - {fileID: 400808}
   - {fileID: 447976}
-  - {fileID: 472160}
   m_Father: {fileID: 441882}
   m_RootOrder: 0
 --- !u!4 &472160
@@ -1470,8 +1469,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: .970000029}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 471800}
-  m_RootOrder: 7
+  m_Father: {fileID: 481750}
+  m_RootOrder: 0
 --- !u!4 &473128
 Transform:
   m_ObjectHideFlags: 1
@@ -1495,6 +1494,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 472160}
   - {fileID: 421926}
   - {fileID: 455582}
   - {fileID: 485954}
@@ -1515,7 +1515,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 481750}
-  m_RootOrder: 5
+  m_RootOrder: 6
 --- !u!4 &485954
 Transform:
   m_ObjectHideFlags: 1
@@ -1527,7 +1527,7 @@ Transform:
   m_LocalScale: {x: 1.20000005, y: 1.20000005, z: 1.20000005}
   m_Children: []
   m_Father: {fileID: 481750}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!4 &487868
 Transform:
   m_ObjectHideFlags: 1
@@ -5091,7 +5091,7 @@ ParticleSystem:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100274}
-  lengthInSec: 5
+  lengthInSec: 1
   startDelay: 0
   speed: 1
   randomSeed: 0
@@ -5151,36 +5151,36 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4279426985
+          rgba: 4294967295
         key1:
           serializedVersion: 2
-          rgba: 4278806004
+          rgba: 4290791950
         key2:
           serializedVersion: 2
-          rgba: 1236905
+          rgba: 1548583
         key3:
           serializedVersion: 2
-          rgba: 0
+          rgba: 714192
         key4:
           serializedVersion: 2
-          rgba: 0
+          rgba: 592372
         key5:
           serializedVersion: 2
-          rgba: 0
+          rgba: 8653541
         key6:
           serializedVersion: 2
-          rgba: 0
+          rgba: 13372786
         key7:
           serializedVersion: 2
-          rgba: 0
+          rgba: 16777215
         ctime0: 0
-        ctime1: 32768
-        ctime2: 65535
-        ctime3: 0
-        ctime4: 0
-        ctime5: 0
-        ctime6: 0
-        ctime7: 0
+        ctime1: 8674
+        ctime2: 17926
+        ctime3: 27371
+        ctime4: 39321
+        ctime5: 47995
+        ctime6: 57247
+        ctime7: 65535
         atime0: 0
         atime1: 65535
         atime2: 0
@@ -5189,7 +5189,7 @@ ParticleSystem:
         atime5: 0
         atime6: 0
         atime7: 0
-        m_NumColorKeys: 3
+        m_NumColorKeys: 8
         m_NumAlphaKeys: 2
       minGradient:
         key0:

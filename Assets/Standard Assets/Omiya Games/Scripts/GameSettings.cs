@@ -150,7 +150,7 @@ public class GameSettings : ISingletonScript
         {
             return numLevelsUnlocked;
         }
-        internal set
+        set
         {
             numLevelsUnlocked = Mathf.Clamp(value, 1, NumLevels);
             PlayerPrefs.SetInt(NumLevelsUnlockedKey, NumLevelsUnlocked);
