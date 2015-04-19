@@ -1,28 +1,41 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(ParticleSystem))]
 public class PooledExplosion : IPooledObject
 {
     [SerializeField]
     float dieAfter = 5f;
 
-    ParticleSystem cache = null;
+    ParticleSystem[] particlesCache = null;
+    AudioMutator soundCache = null;
 
 	// Use this for initialization
 	public override void Start ()
     {
-        if(cache == null)
+        if (particlesCache == null)
         {
-            cache = GetComponent<ParticleSystem>();
+            particlesCache = GetComponentsInChildren<ParticleSystem>();
         }
-        cache.Play();
+        if (soundCache == null)
+        {
+            soundCache = GetComponent<AudioMutator>();
+        }
+        soundCache.Play();
+        foreach(ParticleSystem system in particlesCache)
+        {
+            system.Play();
+        }
         StartCoroutine(Die());
 	}
 
     IEnumerator Die()
     {
         yield return new WaitForSeconds(dieAfter);
+        soundCache.Stop(); ;
+        foreach (ParticleSystem system in particlesCache)
+        {
+            system.Stop();
+        }
         gameObject.SetActive(false);
     }
 }

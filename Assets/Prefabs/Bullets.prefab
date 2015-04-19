@@ -167,13 +167,13 @@ TrailRenderer:
   m_Colors:
     m_Color[0]:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 4278190335
     m_Color[1]:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 4285230079
     m_Color[2]:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 4291546111
     m_Color[3]:
       serializedVersion: 2
       rgba: 4294967295

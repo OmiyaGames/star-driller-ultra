@@ -1308,6 +1308,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectsToPreload:
   - {fileID: 111582, guid: 82ca831b31b6d744aba6232136097e4d, type: 2}
+  - {fileID: 144924, guid: ff83a69372615b344b1b5dd9ca8d18f1, type: 2}
+  - {fileID: 130414, guid: 0caad14a10fe9f44f8fee8327794addf, type: 2}
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2582,7 +2584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4954589407a974cb2c1ba6534fe0f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingClip: {fileID: 0}
+  startingClip: {fileID: 8300000, guid: a837ff7ad86c35a47a7ab1605bd6af77, type: 3}
   transitionDuration: 1
   loopMusic: 1
   audioPriority: 128
