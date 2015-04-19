@@ -510,6 +510,9 @@ public class ShipControl : MonoBehaviour
         {
             deadMenu.Show();
         }
+
+        pauseStartedRealTime = -1f;
+
         jetSound.Stop();
         Time.timeScale = 0.1f;
     }
