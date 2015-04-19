@@ -38,6 +38,8 @@ public class Shooter : IEnemy
     State state = State.Aiming;
     float lastShot = 0f;
     Quaternion lookRotation;
+    ParticleSystem[] allParticles = null;
+    AudioMutator audio = null;
 
     public override void Start()
     {
@@ -46,6 +48,15 @@ public class Shooter : IEnemy
         lastShot = 0f;
 
         shootEvery = Random.RandomRange(shootEveryMin, shootEveryMax);
+
+        if(allParticles == null)
+        {
+            allParticles = GetComponentsInChildren<ParticleSystem>();
+        }
+        if(audio == null)
+        {
+            audio = GetComponent<AudioMutator>();
+        }
     }
 
 	// Update is called once per frame
@@ -62,6 +73,11 @@ public class Shooter : IEnemy
                         PooledBullets bullet = instance.GetComponent<PooledBullets>();
                         bullet.Rotation = transform.rotation;
                     }
+                    foreach (ParticleSystem system in allParticles)
+                    {
+                        system.Play();
+                    }
+                    audio.Play();
                     lastShot = Time.time;
                     state = State.Cooldown;
                 }
