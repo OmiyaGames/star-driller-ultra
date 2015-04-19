@@ -139,6 +139,10 @@ public class ShipControl : MonoBehaviour
     [SerializeField]
     PooledExplosion hitExplosion = null;
 
+    [Header("Credits")]
+    [SerializeField]
+    bool allowChangingTargets = true;
+
     Rigidbody bodyCache = null;
     Animator animatorCache = null;
     Vector2 controlInput = Vector2.zero;
@@ -373,16 +377,23 @@ public class ShipControl : MonoBehaviour
         // Grab controls
         controlInput.x = CrossPlatformInputManager.GetAxis("Horizontal");
         controlInput.y = CrossPlatformInputManager.GetAxis("Vertical");
+        if(FlightDirection == FlightMode.AwayFromTheTarget)
+        {
+            controlInput.x *= -1f;
+        }
         IsRamming = CheckIfRamming();
         Animate.SetFloat(HorizontalField, controlInput.x);
         Animate.SetFloat(VerticalField, controlInput.y);
-        if ((CrossPlatformInputManager.GetButtonDown("NextTarget") == true) || (CrossPlatformInputManager.GetAxis("Xbox360ControllerTriggers") > 0.5f))
+        if (allowChangingTargets == true)
         {
-            targets.NextEnemy();
-        }
-        else if ((CrossPlatformInputManager.GetButtonDown("PreviousTarget") == true) || (CrossPlatformInputManager.GetAxis("Xbox360ControllerTriggers") < -0.5f))
-        {
-            targets.PreviousEnemy();
+            if ((CrossPlatformInputManager.GetButtonDown("NextTarget") == true) || (CrossPlatformInputManager.GetAxis("Xbox360ControllerTriggers") > 0.5f))
+            {
+                targets.NextEnemy();
+            }
+            else if ((CrossPlatformInputManager.GetButtonDown("PreviousTarget") == true) || (CrossPlatformInputManager.GetAxis("Xbox360ControllerTriggers") < -0.5f))
+            {
+                targets.PreviousEnemy();
+            }
         }
         if(CrossPlatformInputManager.GetButtonUp("Pause") == true)
         {
@@ -483,16 +494,9 @@ public class ShipControl : MonoBehaviour
         }
 
         // Grab the next enemy if this one is dead
-        if (enemy.EnemyScript.CurrentHealth <= 0)
+        if ((enemy.EnemyScript.CurrentHealth <= 0) && (targets.HasEnemy == false))
         {
-            if (targets.HasEnemy == true)
-            {
-                targets.NextEnemy();
-            }
-            else
-            {
-                Finish(true);
-            }
+            Finish(true);
         }
     }
 
@@ -501,6 +505,8 @@ public class ShipControl : MonoBehaviour
         if(complete == true)
         {
             completeMenu.Show();
+            enemyNumbersLabel.text = "0";
+            targetReticle.SetActive(false);
 
             // Unlock the next level
             GameSettings settings = Singleton.Get<GameSettings>();
