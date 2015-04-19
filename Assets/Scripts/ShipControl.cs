@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityStandardAssets.CrossPlatformInput;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Animator))]
@@ -61,8 +62,8 @@ public class ShipControl : MonoBehaviour
     [Range(1, 50)]
     int displayDangerBelow = 3;
     [SerializeField]
-    [Range(0, 1)]
-    float enemyHitDamageRatio = 0.3f;
+    [Range(0, 20)]
+    int enemyHitDamage = 5;
     [SerializeField]
     float predictiveMultiplierNormal = 10f;
     [SerializeField]
@@ -87,6 +88,12 @@ public class ShipControl : MonoBehaviour
     [SerializeField]
     [Range(0, 3)]
     float drillRecoverRate = 1f;
+    [SerializeField]
+    [Range(0, 0.5f)]
+    float pauseKillLength = 0.1f;
+    [SerializeField]
+    [Range(0, 0.5f)]
+    float pauseHurtLength = 0.05f;
 
     [Header("Menus")]
     [SerializeField]
@@ -99,12 +106,18 @@ public class ShipControl : MonoBehaviour
     Text emptyDrill;
     [SerializeField]
     Text dangerHealth;
+    [SerializeField]
+    LevelCompleteMenu completeMenu;
+    [SerializeField]
+    LevelFailedMenu deadMenu;
 
     [Header("Target")]
     [SerializeField]
     GameObject targetReticle = null;
     [SerializeField]
     Text distanceLabel = null;
+    [SerializeField]
+    Text enemyNameLabel = null;
 
     [Header("Sound")]
     [SerializeField]
@@ -136,9 +149,10 @@ public class ShipControl : MonoBehaviour
     float timeCollisionStarted = -1f,
         timeInvincible = -1f,
         drillCurrent = 0,
-        timeLastDrilled = 0;
-    int enemyHitDamage = 1,
-        currentHealth = 0;
+        timeLastDrilled = 0,
+        pauseStartedRealTime = -1f,
+        pauseFor = 1f;
+    int currentHealth = 0;
     
     public static ShipControl Instance
     {
@@ -254,7 +268,7 @@ public class ShipControl : MonoBehaviour
                 if (currentHealth <= 0)
                 {
                     // FIXME: do something on death!
-                    Finish();
+                    Finish(false);
                 }
             }
         }
@@ -307,14 +321,13 @@ public class ShipControl : MonoBehaviour
     void Start()
     {
         instance = this;
-        Time.timeScale = 1;
+        Time.timeScale = 0;
 
         // Setup targets
         targets.Setup(this);
 
         // Setup stats
         currentHealth = maxHealth;
-        enemyHitDamage = Mathf.RoundToInt(maxHealth * enemyHitDamageRatio);
         drillCurrent = drillMax;
         timeLastDrilled = -1;
         timeCollisionStarted = -1f;
@@ -352,20 +365,25 @@ public class ShipControl : MonoBehaviour
         targetReticle.transform.position = targets.CurrentEnemy.EnemyTransform.position;
         targetReticle.transform.rotation = camera.rotation;
         distanceLabel.text = Vector3.Distance(transform.position, targets.CurrentEnemy.EnemyTransform.position).ToString("0.0");
+        enemyNameLabel.text = targets.CurrentEnemy.EnemyScript.DisplayName;
 
         // Grab controls
-        controlInput.x = Input.GetAxis("Horizontal");
-        controlInput.y = Input.GetAxis("Vertical");
+        controlInput.x = CrossPlatformInputManager.GetAxis("Horizontal");
+        controlInput.y = CrossPlatformInputManager.GetAxis("Vertical");
         IsRamming = CheckIfRamming();
         Animate.SetFloat(HorizontalField, controlInput.x);
         Animate.SetFloat(VerticalField, controlInput.y);
-        if (Input.GetButtonDown("NextTarget") == true)
+        if ((CrossPlatformInputManager.GetButtonDown("NextTarget") == true) || (CrossPlatformInputManager.GetAxis("Xbox360ControllerTriggers") > 0.5f))
         {
             targets.NextEnemy();
         }
-        else if(Input.GetButtonDown("PreviousTarget") == true)
+        else if ((CrossPlatformInputManager.GetButtonDown("PreviousTarget") == true) || (CrossPlatformInputManager.GetAxis("Xbox360ControllerTriggers") < -0.5f))
         {
             targets.PreviousEnemy();
+        }
+        if(CrossPlatformInputManager.GetButtonUp("Pause") == true)
+        {
+            Singleton.Get<PauseMenu>().Show();
         }
 
         // Figure out the direction to look at
@@ -383,8 +401,11 @@ public class ShipControl : MonoBehaviour
         }
         lookRotation = Quaternion.LookRotation(moveDirection);
 
-        // Update rotation
-        //transform.LookAt(targets.CurrentEnemy.EnemyTransform);
+        if((pauseStartedRealTime > 0) && ((Time.unscaledTime - pauseStartedRealTime) > pauseFor))
+        {
+            Time.timeScale = 1;
+            pauseStartedRealTime = -1f;
+        }
     }
 
     void FixedUpdate()
@@ -432,6 +453,9 @@ public class ShipControl : MonoBehaviour
             }
             bullet.Die();
             Singleton.Get<PoolingManager>().GetInstance(hitExplosion.gameObject, info.contacts[0].point, Quaternion.identity);
+
+            // Pause for a short bit
+            Pause(pauseHurtLength);
         }
     }
 
@@ -442,6 +466,9 @@ public class ShipControl : MonoBehaviour
             // Inflict damage to enemy
             enemy.EnemyScript.CurrentHealth -= 1;
             cameraAnimation.SetTrigger(KilledTrigger);
+
+            // Pause for a short bit
+            Pause(pauseKillLength);
         }
         else
         {
@@ -451,6 +478,9 @@ public class ShipControl : MonoBehaviour
             // Fly away from the enemy
             FlightDirection = FlightMode.AwayFromTheTarget;
             timeCollisionStarted = Time.time;
+
+            // Pause for a short bit
+            Pause(pauseHurtLength);
         }
 
         // Grab the next enemy if this one is dead
@@ -462,13 +492,22 @@ public class ShipControl : MonoBehaviour
             }
             else
             {
-                Finish();
+                Finish(true);
             }
         }
     }
 
-    void Finish()
+    void Finish(bool complete)
     {
+        if(complete == true)
+        {
+            completeMenu.Show();
+        }
+        else
+        {
+            deadMenu.Show();
+        }
+        jetSound.Stop();
         Time.timeScale = 0.1f;
     }
 
@@ -477,7 +516,7 @@ public class ShipControl : MonoBehaviour
         bool returnFlag = false;
 
         // Check if we have the button down
-        if(Input.GetButton("Fire1") == true)
+        if (CrossPlatformInputManager.GetButton("Drill") == true)
         {
             // Check if we have any drill left
             if(CurrentDrill > 0)
@@ -532,5 +571,14 @@ public class ShipControl : MonoBehaviour
                 timeLastDrilled = -1f;
             }
         }
+    }
+
+    private void Pause(float length)
+    {
+        pauseFor = length;
+
+        // Pause for a short bit
+        Time.timeScale = 0;
+        pauseStartedRealTime = Time.unscaledTime;
     }
 }

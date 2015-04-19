@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class IEnemy : IPooledObject
+public abstract class IEnemy : IPooledObject
 {
+    [SerializeField]
+    string displayName = "Asteroid";
     [SerializeField]
     int maxHealth = 1;
     [SerializeField]
@@ -10,6 +12,14 @@ public class IEnemy : IPooledObject
 
     EnemyCollection collection;
     int currentHealth = 0;
+
+    public string DisplayName
+    {
+        get
+        {
+            return displayName;
+        }
+    }
 
     public int CurrentHealth
     {

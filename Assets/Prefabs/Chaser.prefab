@@ -196,11 +196,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4562051c8e4b69849b4dc516d80a9f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  displayName: Chaser I
   maxHealth: 1
   explosion: {fileID: 11442888, guid: ff83a69372615b344b1b5dd9ca8d18f1, type: 2}
   bullets: {fileID: 11489126, guid: 82ca831b31b6d744aba6232136097e4d, type: 2}
   spawnPoints:
   - {fileID: 462462}
+  shootEveryMin: 1
+  shootEveryMax: 2
   shootEvery: 2
   charge: .100000001
   cooldown: .25

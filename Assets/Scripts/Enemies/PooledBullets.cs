@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(AudioMutator))]
 public class PooledBullets : IPooledObject
 {
     public static readonly Dictionary<Collider, PooledBullets> colliderMap = new Dictionary<Collider, PooledBullets>();
@@ -30,6 +31,7 @@ public class PooledBullets : IPooledObject
         currentLookTo = Quaternion.identity;
     bool inDictionary = false,
         homing = true;
+    AudioMutator mutator;
 
     public int Damage
     {
@@ -59,12 +61,25 @@ public class PooledBullets : IPooledObject
         }
     }
 
+    public AudioMutator Audio
+    {
+        get
+        {
+            if(mutator == null)
+            {
+                mutator = GetComponent<AudioMutator>();
+            }
+            return mutator;
+        }
+    }
+
     // Use this for initialization
     public override void Start()
     {
         base.Start();
 
         Body.velocity = Vector3.zero;
+        Audio.Play();
 
         forceDirection = new Vector3(0, 0, force);
         timeStart = Time.time;

@@ -16,7 +16,13 @@ public class Shooter : IEnemy
     Transform[] spawnPoints = null;
     [SerializeField]
     [Range(0, 5)]
-    float shootEvery = 3f;
+    float shootEveryMin = 1f;
+    [SerializeField]
+    [Range(0, 5)]
+    float shootEveryMax = 2f;
+    [SerializeField]
+    [ReadOnly]
+    float shootEvery = 0f;
     [SerializeField]
     [Range(0, 2)]
     float charge = 0.5f;
@@ -36,6 +42,8 @@ public class Shooter : IEnemy
         base.Start();
         state = State.Aiming;
         lastShot = 0f;
+
+        shootEvery = Random.RandomRange(shootEveryMin, shootEveryMax);
     }
 
 	// Update is called once per frame

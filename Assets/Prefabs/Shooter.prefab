@@ -440,6 +440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f42ca7b2a503f74e81ccfce95fa59ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  displayName: Turret V
   maxHealth: 1
   explosion: {fileID: 11442888, guid: ff83a69372615b344b1b5dd9ca8d18f1, type: 2}
   bullets: {fileID: 11489126, guid: 82ca831b31b6d744aba6232136097e4d, type: 2}
@@ -449,6 +450,8 @@ MonoBehaviour:
   - {fileID: 419478}
   - {fileID: 450644}
   - {fileID: 401698}
+  shootEveryMin: 1
+  shootEveryMax: 2
   shootEvery: 1
   charge: .100000001
   cooldown: .25
