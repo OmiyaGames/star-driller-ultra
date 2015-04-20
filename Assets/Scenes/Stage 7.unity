@@ -404,7 +404,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22408124, guid: aa25e18f4809b194d81523ad26e88d43, type: 2}
       propertyPath: m_SizeDelta.x
-      value: -605.749512
+      value: -609.530029
       objectReference: {fileID: 0}
     - target: {fileID: 22469362, guid: aa25e18f4809b194d81523ad26e88d43, type: 2}
       propertyPath: m_AnchorMax.x
@@ -454,7 +454,7 @@ Prefab:
       propertyPath: m_Text
       value: '<b>Hint:</b>
 
-        Enemies Type V only shoot one BIG bullet.'
+        Fuel regenerates slightly on each kill.'
       objectReference: {fileID: 0}
     - target: {fileID: 22487834, guid: aa25e18f4809b194d81523ad26e88d43, type: 2}
       propertyPath: m_SizeDelta.x

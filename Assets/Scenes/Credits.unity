@@ -434,13 +434,13 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22408124, guid: aa25e18f4809b194d81523ad26e88d43, type: 2}
       propertyPath: m_SizeDelta.x
-      value: -605.749512
+      value: -609.530029
       objectReference: {fileID: 0}
     - target: {fileID: 11456382, guid: aa25e18f4809b194d81523ad26e88d43, type: 2}
       propertyPath: m_Text
-      value: '<b>Congratulations!</b>
+      value: 'Congratulations!
 
-        You''ve made it!'
+        You made it!'
       objectReference: {fileID: 0}
     - target: {fileID: 22487834, guid: aa25e18f4809b194d81523ad26e88d43, type: 2}
       propertyPath: m_SizeDelta.x
@@ -996,7 +996,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 12
 --- !u!1001 &872517485
 Prefab:
   m_ObjectHideFlags: 0

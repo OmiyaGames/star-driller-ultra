@@ -80,9 +80,9 @@ public class EnemyCollection : MonoBehaviour
 
     
     [SerializeField]
-    #if !UNITY_WEBGL
+#if UNITY_EDITOR
     [ReadOnly]
-    #endif
+#endif
     List<EnemyInfo> allEnemies = new List<EnemyInfo>();
 
     int currentEnemyIndex = 0;
