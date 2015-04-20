@@ -21,9 +21,9 @@ public class Shooter : IEnemy
     [Range(0, 5)]
     float shootEveryMax = 2f;
     [SerializeField]
-    #if !UNITY_WEBGL
+#if UNITY_EDITOR
     [ReadOnly]
-    #endif
+#endif
     float shootEvery = 0f;
     [SerializeField]
     [Range(0, 2)]
