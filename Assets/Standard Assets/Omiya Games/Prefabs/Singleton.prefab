@@ -1244,6 +1244,10 @@ MonoBehaviour:
     displayName: Stage 7
   - sceneName: Stage 8
     displayName: Stage 8
+  - sceneName: Stage 9
+    displayName: Stage 9
+  - sceneName: Stage 10
+    displayName: Stage 10
   - sceneName: Credits
     displayName: Credits
 --- !u!114 &11400020

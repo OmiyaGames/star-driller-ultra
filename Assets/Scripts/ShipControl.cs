@@ -47,9 +47,9 @@ public class ShipControl : MonoBehaviour
 
     [Header("Conditions")]
     [SerializeField]
-    #if !UNITY_WEBGL
+#if UNITY_EDITOR
     [ReadOnly]
-    #endif
+#endif
     bool rammingOn = false;
     [SerializeField]
     [Range(0, 5)]
@@ -469,6 +469,7 @@ public class ShipControl : MonoBehaviour
     {
         EnemyCollection.EnemyInfo enemy;
         PooledBullets bullet;
+        Beam beam;
         if (targets.ColliderMap.TryGetValue(info.collider, out enemy) == true)
         {
             HitEnemy(enemy);
@@ -484,6 +485,17 @@ public class ShipControl : MonoBehaviour
                 Pause(pauseHurtLength);
             }
             bullet.Die();
+            Singleton.Get<PoolingManager>().GetInstance(hitExplosion.gameObject, info.contacts[0].point, Quaternion.identity);
+        }
+        else if (Beam.colliderMap.TryGetValue(info.collider, out beam) == true)
+        {
+            if (IsRamming == false)
+            {
+                CurrentHealth -= beam.Damage;
+
+                // Pause for a short bit
+                Pause(pauseHurtLength);
+            }
             Singleton.Get<PoolingManager>().GetInstance(hitExplosion.gameObject, info.contacts[0].point, Quaternion.identity);
         }
     }

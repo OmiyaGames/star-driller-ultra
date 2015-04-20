@@ -3996,7 +3996,7 @@ MonoBehaviour:
   rotateLerp: 10
   rammingOn: 0
   reverseFor: 3
-  invincibleFor: .5
+  invincibleFor: .75
   maxHealth: 25
   displayDangerBelow: 10
   enemyHitDamage: 5
@@ -4010,7 +4010,7 @@ MonoBehaviour:
   drillRecoverRate: 2
   pauseKillLength: .100000001
   pauseHurtLength: .0250000004
-  drillRecoverAfterKill: .300000012
+  drillRecoverAfterKill: .449999988
   flightModeLabel: {fileID: 11410480}
   lifeBar: {fileID: 11416420}
   drillBar: {fileID: 11469472}
