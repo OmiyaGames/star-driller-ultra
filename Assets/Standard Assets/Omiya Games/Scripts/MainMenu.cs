@@ -51,6 +51,7 @@ public class MainMenu : MonoBehaviour
         // Check if we should remove the quit button (you can't quite out of a webplayer)
         if(settings.IsWebplayer == true)
         {
+            /*
             // Grab the level gird's minimum range
             Vector2 minAnchor = levelLayoutGroup.CachedRectTransform.anchorMin;
             Vector2 minOffset = levelLayoutGroup.CachedRectTransform.offsetMin;
@@ -63,7 +64,7 @@ public class MainMenu : MonoBehaviour
             // Expand the level gird to encompass
             levelLayoutGroup.CachedRectTransform.anchorMin = minAnchor;
             levelLayoutGroup.CachedRectTransform.offsetMin = minOffset;
-
+            */
             // Disable the quit button entirely
             quitButton.gameObject.SetActive(false);
         }
