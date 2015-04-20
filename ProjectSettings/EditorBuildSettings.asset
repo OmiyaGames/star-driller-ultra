@@ -24,4 +24,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Stage 8.unity
   - enabled: 1
+    path: Assets/Scenes/Stage 9.unity
+  - enabled: 1
+    path: Assets/Scenes/Stage 10.unity
+  - enabled: 1
     path: Assets/Scenes/Credits.unity
