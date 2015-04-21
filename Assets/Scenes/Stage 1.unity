@@ -168,17 +168,25 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22415590, guid: aa25e18f4809b194d81523ad26e88d43, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 253.75
+      value: 324.615479
       objectReference: {fileID: 0}
     - target: {fileID: 22408124, guid: aa25e18f4809b194d81523ad26e88d43, type: 2}
       propertyPath: m_SizeDelta.x
-      value: -630.825317
+      value: -179.692261
       objectReference: {fileID: 0}
     - target: {fileID: 11456382, guid: aa25e18f4809b194d81523ad26e88d43, type: 2}
       propertyPath: m_Text
-      value: '<b>Destroy enemies by drilling!</b>
+      value: 'WASD, arrow keys, or left-stick to move;
 
-        Controls: arrow keys to move around, and space to drill (uses up fuel).'
+        Space or A-button to drill into enemies (uses fuel).'
+      objectReference: {fileID: 0}
+    - target: {fileID: 22487834, guid: aa25e18f4809b194d81523ad26e88d43, type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 334.615356
+      objectReference: {fileID: 0}
+    - target: {fileID: 11456382, guid: aa25e18f4809b194d81523ad26e88d43, type: 2}
+      propertyPath: m_FontData.m_Alignment
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aa25e18f4809b194d81523ad26e88d43, type: 2}
