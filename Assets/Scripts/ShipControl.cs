@@ -544,7 +544,7 @@ public class ShipControl : MonoBehaviour
 
             // Unlock the next level
             GameSettings settings = Singleton.Get<GameSettings>();
-            if(Application.loadedLevel >= settings.NumLevelsUnlocked)
+			if((Application.loadedLevel >= settings.NumLevelsUnlocked) && (Application.loadedLevel < settings.CreditsLevel.Ordinal))
             {
                 settings.NumLevelsUnlocked = Mathf.Clamp((Application.loadedLevel + 1), 1, settings.NumLevels);
             }
