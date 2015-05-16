@@ -1,22 +1,9 @@
-This is a template Unity project Omiya Games uses to start their game project.
-In this Unity project, the following folders has the following roles:
+Project created in Unity 5.  To run this project, follow these steps:
 
-Assets:
-A folder required by Unity.  Contains assets used for the game.  See the README.txt in the folder for more details.
+1) Have Unity 5+ and Blender 2.7+ installed on your computer.
+2) Download the entire source code.  If downloaded in zipped form, remember to unzip it.
+3) Open Unity, and select the folder the project's source is held.
+4) Watch it import.
 
-ProjectSettings:
-A folder required by Unity.  Contains settings for Unity.
-
-Builds:
-A folder where its contents are ignored by Mercurial.  Typically where game builds are created in.
-
-UnimportedAssets:
-A folder that Mercurial versions, but Unity doesn't detect.  Typically where unfinished art assets are placed in.
-
-Library:
-A folder required by Unity.  It's contents are very cryptic and mysterious.  I wouldn't recommend touching it.
-Ignored by Mercurial.
-
-Temp:
-A folder used by Unity.  Unity creates it when an editor opens.  I wouldn't recommend touching it.
-Ignored by Mercurial.
+Bascially, all the models are held in the Blender-only *.blend format, which means that it must be installed for Unity to import them properly.
+That said, Blender is free, and doesn't use more than 1GB of hard drive space, so this setup should be pretty cheap to setup.
