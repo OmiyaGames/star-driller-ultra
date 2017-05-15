@@ -5,11 +5,11 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 462516}
-  - 33: {fileID: 3318172}
-  - 23: {fileID: 2373862}
+  - component: {fileID: 462516}
+  - component: {fileID: 3318172}
+  - component: {fileID: 2373862}
   m_Layer: 0
   m_Name: Graphics
   m_TagString: Untagged
@@ -22,9 +22,9 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 401512}
+  - component: {fileID: 401512}
   m_Layer: 0
   m_Name: ShooterM
   m_TagString: Untagged
@@ -37,12 +37,11 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 410982}
-  - 33: {fileID: 3389956}
-  - 23: {fileID: 2326934}
-  - 95: {fileID: 9577042}
+  - component: {fileID: 410982}
+  - component: {fileID: 3389956}
+  - component: {fileID: 2326934}
   m_Layer: 0
   m_Name: shooter
   m_TagString: Untagged
@@ -55,10 +54,10 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 403088}
-  - 136: {fileID: 13603158}
+  - component: {fileID: 403088}
+  - component: {fileID: 13603158}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Weapon
@@ -71,12 +70,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 489638}
-  - 54: {fileID: 5417656}
-  - 95: {fileID: 9501200}
-  - 114: {fileID: 11418416}
+  - component: {fileID: 489638}
+  - component: {fileID: 5417656}
+  - component: {fileID: 9501200}
+  - component: {fileID: 11418416}
   m_Layer: 0
   m_Name: Beam
   m_TagString: Weapon
@@ -89,15 +88,15 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 461940}
-  - 135: {fileID: 13557426}
-  - 114: {fileID: 11470144}
-  - 54: {fileID: 5437560}
-  - 82: {fileID: 8270020}
-  - 114: {fileID: 11452328}
-  - 114: {fileID: 11462172}
+  - component: {fileID: 461940}
+  - component: {fileID: 13557426}
+  - component: {fileID: 11470144}
+  - component: {fileID: 5437560}
+  - component: {fileID: 8270020}
+  - component: {fileID: 11452328}
+  - component: {fileID: 11462172}
   m_Layer: 0
   m_Name: ShooterM
   m_TagString: Enemy
@@ -112,25 +111,27 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 154628}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -149.300003, y: 0, z: -80.5999985}
+  m_LocalPosition: {x: -149.3, y: 0, z: -80.6}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
-  - {fileID: 489638}
   - {fileID: 461940}
+  - {fileID: 489638}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &403088
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 174950}
-  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106709}
-  m_LocalPosition: {x: 0, y: -0, z: 12.8000002}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
+  m_LocalPosition: {x: 0, y: -0, z: 12.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 489638}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &410982
 Transform:
   m_ObjectHideFlags: 1
@@ -139,10 +140,11 @@ Transform:
   m_GameObject: {fileID: 168312}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .699999988, y: .699999988, z: .699999988}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children: []
   m_Father: {fileID: 461940}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &461940
 Transform:
   m_ObjectHideFlags: 1
@@ -155,19 +157,21 @@ Transform:
   m_Children:
   - {fileID: 410982}
   m_Father: {fileID: 401512}
-  m_RootOrder: 1
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &462516
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 102216}
-  m_LocalRotation: {x: .49999994, y: .499999851, z: -.500000238, w: -.500000119}
-  m_LocalPosition: {x: 0, y: 1.9386551e-08, z: 12.8000002}
+  m_LocalRotation: {x: 0.49999994, y: 0.49999985, z: -0.50000024, w: -0.5000001}
+  m_LocalPosition: {x: 0, y: 0.000000019386551, z: 12.8}
   m_LocalScale: {x: 1, y: 12.5, z: 1}
   m_Children: []
   m_Father: {fileID: 489638}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &489638
 Transform:
   m_ObjectHideFlags: 1
@@ -181,7 +185,8 @@ Transform:
   - {fileID: 403088}
   - {fileID: 462516}
   m_Father: {fileID: 401512}
-  m_RootOrder: 0
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &2326934
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -191,20 +196,28 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 2
   m_Materials:
   - {fileID: 2100000, guid: 5c845b390f653e64794aef7863a1675d, type: 2}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
   m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!23 &2373862
 MeshRenderer:
@@ -215,20 +228,28 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 2100000, guid: f61b6ea639b164f449bf950fa7b000cd, type: 2}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
   m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!33 &3318172
 MeshFilter:
@@ -243,7 +264,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 168312}
-  m_Mesh: {fileID: 4300000, guid: 6217700ae65a1b047b84966cb7786d91, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 979f93ee8f7b93543bf7b960704b6ccf, type: 3}
 --- !u!54 &5417656
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -253,7 +274,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: .0500000007
+  m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
@@ -268,7 +289,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: .0500000007
+  m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
@@ -285,10 +306,12 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 259060e1db0b3bf42bfad7ea5f46c6b7, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: .300000012
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 1
   Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 30
@@ -301,48 +324,57 @@ AudioSource:
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - serializedVersion: 2
+      time: 0
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-    - time: 1
+    - serializedVersion: 2
+      time: 1
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   panLevelCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - serializedVersion: 2
+      time: 0
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - serializedVersion: 2
+      time: 0
       value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - serializedVersion: 2
+      time: 0
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &9501200
 Animator:
   serializedVersion: 3
@@ -353,23 +385,6 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 3cf57b853775ab7459876b140dc6bbc0, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
---- !u!95 &9577042
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 168312}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 6217700ae65a1b047b84966cb7786d91, type: 3}
-  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -412,7 +427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centerPitch: 1
-  pitchMutationRange: {x: -.5, y: .5}
+  pitchMutationRange: {x: -0.5, y: 0.5}
 --- !u!114 &11470144
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -445,7 +460,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .699999988
+  m_Radius: 0.7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &13603158
 CapsuleCollider:
@@ -456,7 +471,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: .5
+  m_Radius: 0.5
   m_Height: 25
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
