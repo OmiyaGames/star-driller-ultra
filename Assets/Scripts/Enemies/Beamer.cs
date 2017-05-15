@@ -14,9 +14,7 @@ public class Beamer : IEnemy
     [Range(0, 10)]
     float shootEveryMax = 2f;
     [SerializeField]
-#if UNITY_EDITOR
     [ReadOnly]
-#endif
     float shootEvery = 0f;
     [SerializeField]
     [Range(0, 10)]
@@ -25,9 +23,7 @@ public class Beamer : IEnemy
     [Range(0, 10)]
     float fireMax = 2f;
     [SerializeField]
-#if UNITY_EDITOR
     [ReadOnly]
-#endif
     float fireDuration = 0f;
     [SerializeField]
     [Range(0, 3)]
