@@ -118,6 +118,10 @@ public class ShipControl : MonoBehaviour
     [SerializeField]
     GameObject targetReticle = null;
     [SerializeField]
+    float scaleMultiplier = 1f;
+    [SerializeField]
+    Vector2 scaleRange = new Vector2(0.1f, 100f);
+    [SerializeField]
     Text distanceLabel = null;
     [SerializeField]
     Text enemyNameLabel = null;
@@ -387,6 +391,7 @@ public class ShipControl : MonoBehaviour
         targetReticle.SetActive(true);
         targetReticle.transform.position = targets.CurrentEnemy.EnemyTransform.position;
         targetReticle.transform.rotation = camera.rotation;
+        targetReticle.transform.localScale = Vector3.one * Mathf.Clamp((Vector3.Distance(transform.position, targets.CurrentEnemy.EnemyTransform.position) * scaleMultiplier), scaleRange.x, scaleRange.y);
         distanceLabel.text = Vector3.Distance(transform.position, targets.CurrentEnemy.EnemyTransform.position).ToString("0.0");
         enemyNameLabel.text = targets.CurrentEnemy.EnemyScript.DisplayName;
         enemyNumbersLabel.text = targets.AllEnemies.Count.ToString();
