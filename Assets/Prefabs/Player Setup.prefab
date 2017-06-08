@@ -142,7 +142,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 422286}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 22472226}
   - component: {fileID: 22200764}
   - component: {fileID: 11434204}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TargetReticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -996,7 +996,7 @@ GameObject:
   - component: {fileID: 22486184}
   - component: {fileID: 22279268}
   - component: {fileID: 11407892}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Distance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1164,7 +1164,7 @@ GameObject:
   - component: {fileID: 22431358}
   - component: {fileID: 22377694}
   - component: {fileID: 11421446}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Distance Indicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1297,7 +1297,7 @@ GameObject:
   - component: {fileID: 22465888}
   - component: {fileID: 22202072}
   - component: {fileID: 11422080}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Enemy Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1581,14 +1581,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 114740}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5}
+  m_LocalRotation: {x: 0.08691612, y: -0.07382654, z: 0.0064589884, w: 0.99345535}
+  m_LocalPosition: {x: 5, y: 4, z: -7.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 440994}
   m_Father: {fileID: 449606}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 10, y: -8.5, z: 0}
 --- !u!4 &474670
 Transform:
   m_ObjectHideFlags: 1
@@ -4174,9 +4174,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Destroy enemies by drilling!
+  m_Text: '<b>Hint:</b>
 
-    Controls: arrow keys to move around, and space to drill (uses up fuel).'
+    Enemies Type X shoot heatseekers.'
 --- !u!114 &11457428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4787,6 +4787,7 @@ MonoBehaviour:
   m_UpdateType: 0
   ship: {fileID: 11475092}
   enemies: {fileID: 11403768}
+  cameraPositionOffset: {x: 0, y: 0, z: 0}
   m_MoveSpeed: 100
   m_TurnSpeed: 20
   m_RollSpeed: 0.5
@@ -11505,7 +11506,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 1748727789
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!223 &22377694
 Canvas:
@@ -11602,7 +11603,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 359.59998, y: -270.8333}
+  m_AnchoredPosition: {x: 359.6, y: -270.8333}
   m_SizeDelta: {x: 719.19995, y: 100.333336}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22406068
@@ -11795,7 +11796,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 359.59998, y: -50.166687}
+  m_AnchoredPosition: {x: 359.6, y: -50.166687}
   m_SizeDelta: {x: 719.19995, y: 100.333336}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22420604
@@ -12529,7 +12530,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 359.59998, y: -160.5}
+  m_AnchoredPosition: {x: 359.6, y: -160.5}
   m_SizeDelta: {x: 719.19995, y: 100.333336}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &100100000
