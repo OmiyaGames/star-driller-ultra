@@ -423,7 +423,8 @@ public class ShipControl : MonoBehaviour
         }
 
         // Figure out the direction to look at
-        targetToShip = (targets.CurrentEnemy.EnemyTransform.position - transform.position);
+        targetToShip = (targets.CurrentEnemy.EnemyTransform.position + transform.position) / 2f;
+        targetToShip = (targetToShip - transform.position);
         targetToShip.Normalize();
         moveDirection = targetToShip;
         if (FlightDirection == FlightMode.AwayFromTheTarget)
@@ -519,9 +520,8 @@ public class ShipControl : MonoBehaviour
         }
         else
         {
-            // Fly away from the enemy
-            FlightDirection = FlightMode.AwayFromTheTarget;
-            timeCollisionStarted = Time.time;
+            // Inflict damage to enemy
+            enemy.EnemyScript.CurrentHealth -= 1;
 
             // Pause for a short bit
             Pause(pauseHurtLength);

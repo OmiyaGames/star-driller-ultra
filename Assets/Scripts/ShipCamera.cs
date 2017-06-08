@@ -7,6 +7,8 @@ public class ShipCamera : UnityStandardAssets.Cameras.PivotBasedCameraRig
     ShipControl ship = null;
     [SerializeField]
     EnemyCollection enemies = null;
+    [SerializeField]
+    Vector3 cameraPositionOffset = new Vector3(0f, 0f, 0f);
     [SerializeField] 
     float m_MoveSpeed = 3; // How fast the rig will move to keep up with target's position
     [SerializeField] 
@@ -91,7 +93,7 @@ public class ShipCamera : UnityStandardAssets.Cameras.PivotBasedCameraRig
         }
 
         // camera position moves towards target position:
-        transform.position = Vector3.Lerp(transform.position, m_Target.position, deltaTime*m_MoveSpeed);
+        transform.position = Vector3.Lerp(transform.position, m_Target.position + cameraPositionOffset, deltaTime*m_MoveSpeed);
 
         // camera's rotation is split into two parts, which can have independend speed settings:
         // rotating towards the target's forward direction (which encompasses its 'yaw' and 'pitch')
